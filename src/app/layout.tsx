@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Roboto, Ubuntu } from 'next/font/google';
 
 import Navbar from '@/components/Navbar/Navbar';
+import Search from '@/components/Search/Search';
 
 import './globals.css';
 
@@ -28,9 +29,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
-      <body className={`${roboto.variable} ${ubuntu.variable} `}>
+      <body className={`${roboto.variable} ${ubuntu.variable}`}>
         <Navbar />
-        <main className="main">{children}</main>
+        <main className="main">
+          <Search />
+          {children}
+        </main>
       </body>
     </html>
   );

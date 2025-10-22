@@ -3,6 +3,8 @@
 }
 
 body {
+  overflow: hidden;
+  max-height: 100vh;
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -28,5 +30,5 @@ li {
 }
 
 .main {
-  padding-left: 93px;
+  margin-left: 93px;
 }
