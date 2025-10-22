@@ -1,7 +1,6 @@
 import Image from 'next/image';
-import NavbarItem from './NavbarItem/NavbarItem';
 
-import NavbarList from './data';
+import NavbarList from './NavbarList/NavbarList';
 
 import styles from './Navbar.module.scss';
 
@@ -15,11 +14,7 @@ const Navbar = () => {
         height={44}
         alt="Галочка"
       />
-      <ul className={styles.list}>
-        {NavbarList.map(({ img, title, url }) => {
-          return <NavbarItem key={title} img={img} title={title} url={url} />;
-        })}
-      </ul>
+      <NavbarList />
     </nav>
   );
 };

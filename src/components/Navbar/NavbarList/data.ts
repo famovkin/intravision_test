@@ -1,4 +1,4 @@
-const NavbarList = [
+const NavbarListData = [
   {
     img: {
       src: '/icon-knowledge-base.png',
@@ -61,4 +61,4 @@ const NavbarList = [
   },
 ];
 
-export default NavbarList;
+export default NavbarListData;

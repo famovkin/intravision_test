@@ -14,14 +14,10 @@
   text-align: center;
 }
 
-.navbar::-webkit-scrollbar {
-  display: none;
-}
-
 .logo {
   margin-bottom: 20px;
 }
 
-.list {
-  min-width: 100%;
+.navbar::-webkit-scrollbar {
+  display: none;
 }

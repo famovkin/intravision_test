@@ -1,10 +1,7 @@
-'use client';
-
 import classnames from 'classnames';
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
-import { FC } from 'react';
+import React, { FC } from 'react';
 
 import styles from './NavbarItem.module.scss';
 
@@ -17,34 +14,31 @@ interface INavbarItem {
   };
   title: string;
   url: string;
+  isActive: boolean;
 }
 
-const NavbarItem: FC<INavbarItem> = ({ img, title, url }) => {
-  const pathname = usePathname();
-  const isActive =
-    pathname === url || (pathname.startsWith(url) && pathname !== '/');
-
+const NavbarItem: FC<INavbarItem> = ({ img, title, url, isActive }) => {
   const { src, width, height, alt } = img;
 
   return (
-    <Link
-      className={classnames(styles.navItem, {
-        [styles.active]: isActive,
-      })}
-      href={url}
-    >
-      <Image
-        className={styles.icon}
-        src={src}
-        width={width}
-        height={height}
-        alt={alt}
-      />
-      <li key={title} className={styles.title}>
-        {title}
-      </li>
-    </Link>
+    <li key={title}>
+      <Link
+        className={classnames(styles.navItem, {
+          [styles.active]: isActive,
+        })}
+        href={url}
+      >
+        <Image
+          className={styles.icon}
+          src={src}
+          width={width}
+          height={height}
+          alt={alt}
+        />
+        <p className={styles.title}>{title}</p>
+      </Link>
+    </li>
   );
 };
 
-export default NavbarItem;
+export default React.memo(NavbarItem);
