@@ -1,5 +1,8 @@
 import type { Metadata } from 'next';
 import { Roboto, Ubuntu } from 'next/font/google';
+
+import Navbar from '@/components/Navbar/Navbar';
+
 import './globals.css';
 
 const roboto = Roboto({
@@ -25,8 +28,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="ru">
-      <body className={`${roboto.variable} ${ubuntu.variable}`}>
-        {children}
+      <body className={`${roboto.variable} ${ubuntu.variable} `}>
+        <Navbar />
+        <main className="main">{children}</main>
       </body>
     </html>
   );

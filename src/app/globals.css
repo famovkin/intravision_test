@@ -1,5 +1,5 @@
 :root {
-  --background: #ffffff;
+  --background: #fff;
 }
 
 body {
@@ -18,4 +18,15 @@ body {
 a {
   color: inherit;
   text-decoration: none;
+}
+
+ul,
+li {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.main {
+  padding-left: 93px;
 }

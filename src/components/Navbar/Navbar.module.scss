@@ -1,0 +1,27 @@
+.navbar {
+  position: fixed;
+  display: flex;
+  width: 93px;
+  height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 18px;
+  background-color: #002137;
+  color: white;
+  -ms-overflow-style: none;
+  overflow-y: auto;
+  scrollbar-width: none;
+  text-align: center;
+}
+
+.navbar::-webkit-scrollbar {
+  display: none;
+}
+
+.logo {
+  margin-bottom: 20px;
+}
+
+.list {
+  min-width: 100%;
+}

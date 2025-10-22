@@ -1,0 +1,19 @@
+.navItem {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 14px 0;
+}
+
+.active {
+  background: #002c49;
+}
+
+.icon {
+  margin-bottom: 5px;
+}
+
+.title {
+  font-size: 12px;
+}
