@@ -1,5 +1,5 @@
 const Requests = () => {
-  return <h1>Заявки</h1>;
+  return null;
 };
 
 export default Requests;
