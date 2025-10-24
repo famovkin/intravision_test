@@ -3,6 +3,7 @@ import { Roboto, Ubuntu } from 'next/font/google';
 
 import Navbar from '@/components/Navbar/Navbar';
 import Search from '@/components/Search/Search';
+import StoreProvider from './StoreProvider';
 
 import './globals.css';
 
@@ -28,14 +29,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ru">
-      <body className={`${roboto.variable} ${ubuntu.variable}`}>
-        <Navbar />
-        <main className="main">
-          <Search />
-          {children}
-        </main>
-      </body>
-    </html>
+    <StoreProvider>
+      <html lang="ru">
+        <body className={`${roboto.variable} ${ubuntu.variable}`}>
+          <Navbar />
+          <main className="main">
+            <Search />
+            {children}
+          </main>
+        </body>
+      </html>
+    </StoreProvider>
   );
 }
