@@ -3,8 +3,9 @@ import { fetchExecutors } from '@/lib/features/executors/executorsSlice';
 import { useAppStore } from '@/lib/hooks';
 import { useEffect } from 'react';
 
-import styles from './page.module.css';
 import { fetchStatuses } from '@/lib/features/statuses/statusesSlice';
+
+import styles from './page.module.css';
 
 // const errorCallHandler = () => {
 //   throw new Error();

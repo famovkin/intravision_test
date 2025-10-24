@@ -79,7 +79,11 @@ const initialState: IInitialState = {
   error: null,
 };
 
-export const fetchRequests = createAsyncThunk(
+export const fetchRequests = createAsyncThunk<
+  IRequest[],
+  void,
+  { state: RootState }
+>(
   'requests/fetchRequests',
   async () => {
     const response = await fetch(GET_REQUEST_URL);
@@ -91,6 +95,15 @@ export const fetchRequests = createAsyncThunk(
     const res = await response.json();
 
     return res.value;
+  },
+  {
+    condition: (_, { getState }) => {
+      const { requests } = getState();
+      if (requests.status === 'loading' || requests.status === 'succeeded') {
+        return false;
+      }
+      return true;
+    },
   }
 );
 

@@ -1,3 +1,4 @@
+"use client"
 import React, { FC, useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { createPortal } from 'react-dom';

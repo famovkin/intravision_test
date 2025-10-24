@@ -1,4 +1,3 @@
-'use client';
 import Modal from '@/components/Modal/Modal';
 import Link from 'next/link';
 import React from 'react';

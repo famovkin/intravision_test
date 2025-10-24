@@ -1,6 +1,6 @@
 'use client';
 import Link from 'next/link';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 import {
   fetchRequests,
@@ -41,4 +41,4 @@ const RequestsList = () => {
   return <ul>{content}</ul>;
 };
 
-export default React.memo(RequestsList);
+export default RequestsList;
