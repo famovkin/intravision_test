@@ -10,6 +10,8 @@ import {
 } from '@/lib/features/requests/requestsSlice';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 
+import styles from './RequestList.module.scss';
+
 const RequestsList = () => {
   const dispatch = useAppDispatch();
 
@@ -31,14 +33,17 @@ const RequestsList = () => {
   } else if (requestsStatus === 'failed') {
     content = <p>{requestsError}</p>;
   } else if (requestsStatus === 'succeeded') {
-    content = requests.map((request) => (
-      <li key={request.id}>
-        <Link href={`/requests/${request.id}`}>{request.name}</Link>
-      </li>
-    ));
+    content = requests.map((request, index) => {
+      console.log(request, index);
+      return (
+        <li key={request.id}>
+          <Link href={`/requests/${request.id}`}>{request.name}</Link>
+        </li>
+      );
+    });
   }
 
-  return <ul>{content}</ul>;
+  return <ul className={styles.list}>{content}</ul>;
 };
 
 export default RequestsList;

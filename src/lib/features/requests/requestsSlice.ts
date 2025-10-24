@@ -1,8 +1,10 @@
 import { RootState } from '@/lib/store';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-const GET_REQUEST_URL =
-  'http://intravision-task.test01.intravision.ru/odata/tasks?tenantguid=995bce8c-fed5-43e8-a86d-2785286240f0';
+const TENANT_GUID = '995bce8c-fed5-43e8-a86d-2785286240f0';
+const API_PATH = 'http://intravision-task.test01.intravision.ru/';
+const ALL_REQUESTS_URL = `${API_PATH}odata/tasks?tenantguid=${TENANT_GUID}`;
+const SINGlE_REQUEST_URL = `${API_PATH}api/${TENANT_GUID}/Tasks/`;
 
 interface ITag {
   id: number;
@@ -11,35 +13,18 @@ interface ITag {
 
 export type StatusRgb = `#${string}`;
 
-// const requestExample = {
-//   createdAt: '2025-10-22T18:53:57.2939101+03:00',
-//   description:
-//     '<p style="colo#e5e5e5;">Уха</p> из трех видов рыб. Салат с телятиной. МОРС КЛЮКВЕННЫЙ',
-//   executorGroupId: 58142,
-//   executorGroupName: 'Офис менеджеры',
-//   executorId: 58143,
-//   executorName: 'Петров Борис',
-//   id: 102129,
-//   initiatorId: 58144,
-//   initiatorName: 'Иванов Андрей',
-//   name: 'Заказать обед',
-//   price: 100,
-//   priorityId: 70238,
-//   priorityName: 'Средний',
-//   resolutionDatePlan: '2025-10-22T18:53:57.2939101+03:00',
-//   serviceId: 58142,
-//   serviceName: 'Еда > Заказ обедов',
-//   statusId: 76287,
-//   statusName: 'Открыта',
-//   statusRgb: '#fd5e53',
-//   tags: [
-//     { id: 70237, name: 'Салат' },
-//     { id: 70236, name: 'Суп' },
-//   ],
-//   taskTypeId: 58143,
-//   taskTypeName: 'Стандартный',
-//   updatedAt: '2025-10-22T18:53:57.2939101+03:00',
-// };
+const editRequestExample = {
+  id: 102129,
+  comment: 'string',
+  statusId: 76284,
+  tags: [70240],
+  executorId: 58143,
+};
+
+const newRequestExample = {
+  name: 'Заказать завтрак',
+  description: 'Хлопья, кофе, круассан',
+};
 
 interface IRequest {
   createdAt: string;
@@ -86,7 +71,7 @@ export const fetchRequests = createAsyncThunk<
 >(
   'requests/fetchRequests',
   async () => {
-    const response = await fetch(GET_REQUEST_URL);
+    const response = await fetch(ALL_REQUESTS_URL);
 
     if (!response.ok) {
       throw new Error('Ошибка получения списка заявок');
@@ -107,6 +92,64 @@ export const fetchRequests = createAsyncThunk<
   }
 );
 
+export const addNewRequest = createAsyncThunk<
+  IRequest,
+  void,
+  { state: RootState }
+>('requests/addNewRequest', async () => {
+  const response = await fetch(SINGlE_REQUEST_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newRequestExample),
+  });
+
+  if (!response.ok) {
+    throw new Error('Ошибка при создании новой заявки');
+  }
+
+  const newRequestId = await response.json();
+  const newRequestResponse = await fetch(
+    `${SINGlE_REQUEST_URL}${newRequestId}`
+  );
+
+  if (!newRequestResponse.ok) {
+    throw new Error('Ошибка получения информации о заявке');
+  }
+
+  const newRequestData = await newRequestResponse.json();
+
+  return newRequestData;
+});
+
+export const editRequest = createAsyncThunk<
+  IRequest,
+  void,
+  { state: RootState }
+>('requests/editRequest', async () => {
+  const response = await fetch(SINGlE_REQUEST_URL, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(editRequestExample),
+  });
+
+  if (!response.ok) {
+    throw new Error('Ошибка при создании новой заявки');
+  }
+
+  // TODO: поправить логику
+  const newRequestResponse = await fetch(`${SINGlE_REQUEST_URL}${102129}`);
+
+  if (!newRequestResponse.ok) {
+    throw new Error('Ошибка получения информации о заявке');
+  }
+
+  const newRequestData = await newRequestResponse.json();
+
+  return newRequestData;
+});
+
 const requestsSlice = createSlice({
   name: 'requests',
   initialState,
@@ -123,6 +166,14 @@ const requestsSlice = createSlice({
       .addCase(fetchRequests.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message || 'Ошибка';
+      })
+      .addCase(addNewRequest.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.requests.push(action.payload);
+      })
+      .addCase(editRequest.fulfilled, (state, action) => {
+        // state.status = 'succeeded';
+        // state.requests.push(action.payload);
       });
   },
 });
