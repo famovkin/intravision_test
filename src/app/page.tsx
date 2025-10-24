@@ -1,9 +1,10 @@
 'use client';
-import { fetchExecutors } from '@/lib/features/executors/executorsSlice';
 import { useAppStore } from '@/lib/hooks';
 import { useEffect } from 'react';
 
+import { fetchExecutors } from '@/lib/features/executors/executorsSlice';
 import { fetchStatuses } from '@/lib/features/statuses/statusesSlice';
+import { fetchPriorities } from '@/lib/features/priorities/prioritiesSlice';
 
 import styles from './page.module.css';
 
@@ -16,6 +17,7 @@ export default function Home() {
   useEffect(() => {
     store.dispatch(fetchExecutors());
     store.dispatch(fetchStatuses());
+    store.dispatch(fetchPriorities());
   }, [store]);
 
   return (

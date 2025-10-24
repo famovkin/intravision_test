@@ -2,6 +2,7 @@ import { configureStore } from '@reduxjs/toolkit';
 import requestsReducer from './features/requests/requestsSlice';
 import executorsReducer from './features/executors/executorsSlice';
 import statusesReducer from './features/statuses/statusesSlice';
+import prioritiesReducer from './features/priorities/prioritiesSlice';
 
 export const makeStore = () => {
   return configureStore({
@@ -9,6 +10,7 @@ export const makeStore = () => {
       requests: requestsReducer,
       executors: executorsReducer,
       statuses: statusesReducer,
+      priorities: prioritiesReducer,
     },
   });
 };

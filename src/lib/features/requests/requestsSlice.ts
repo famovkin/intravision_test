@@ -11,7 +11,7 @@ interface ITag {
   name: string;
 }
 
-export type StatusRgb = `#${string}`;
+export type RgbType = `#${string}`;
 
 const editRequestExample = {
   id: 102129,
@@ -45,7 +45,7 @@ interface IRequest {
   serviceName: string;
   statusId: number;
   statusName: string;
-  statusRgb: StatusRgb;
+  statusRgb: RgbType;
   tags: ITag[];
   taskTypeId: number;
   taskTypeName: string;
