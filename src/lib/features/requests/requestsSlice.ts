@@ -9,7 +9,7 @@ interface ITag {
   name: string;
 }
 
-type StatusRgb = `#${string}`;
+export type StatusRgb = `#${string}`;
 
 // const requestExample = {
 //   createdAt: '2025-10-22T18:53:57.2939101+03:00',

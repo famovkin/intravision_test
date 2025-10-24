@@ -25,9 +25,9 @@ const Modal: FC<IModal> = ({ children, path }) => {
   const container =
     typeof document !== 'undefined' ? document.getElementById(path) : null;
 
-  if (!container) return null;
+  if (!container || !isDocumentMounted) return null;
 
-  if (isModalOpen && isDocumentMounted) {
+  if (isModalOpen) {
     return createPortal(
       <div className={styles.modal}>
         <button onClick={closeHandler}>Закрыть</button>

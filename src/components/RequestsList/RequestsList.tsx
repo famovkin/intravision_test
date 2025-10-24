@@ -1,7 +1,6 @@
 'use client';
 import Link from 'next/link';
 import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 
 import {
   fetchRequests,
@@ -9,14 +8,14 @@ import {
   selectRequestsError,
   selectRequestsStatus,
 } from '@/lib/features/requests/requestsSlice';
-import { AppDispatch } from '@/lib/store';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 
 const RequestsList = () => {
-  const dispatch: AppDispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const requests = useSelector(selectAllRequests);
-  const requestsStatus = useSelector(selectRequestsStatus);
-  const requestsError = useSelector(selectRequestsError);
+  const requests = useAppSelector(selectAllRequests);
+  const requestsStatus = useAppSelector(selectRequestsStatus);
+  const requestsError = useAppSelector(selectRequestsError);
 
   useEffect(() => {
     if (requestsStatus === 'idle') {

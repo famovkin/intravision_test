@@ -1,10 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
 import requestsReducer from './features/requests/requestsSlice';
+import executorsReducer from './features/executors/executorsSlice';
+import statusesReducer from './features/statuses/statusesSlice';
 
 export const makeStore = () => {
   return configureStore({
     reducer: {
       requests: requestsReducer,
+      executors: executorsReducer,
+      statuses: statusesReducer,
     },
   });
 };
