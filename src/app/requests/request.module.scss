@@ -1,0 +1,10 @@
+.requestsContainer {
+  height: calc(100vh - 66px);
+  overflow-y: auto;
+}
+
+.link {
+  display: inline-block;
+  height: 120px;
+  border: 1px solid green;
+}

@@ -1,14 +1,17 @@
 'use client';
-import Link from 'next/link';
 import { useEffect } from 'react';
 
+import { fetchExecutors } from '@/lib/features/executors/executorsSlice';
+import { fetchPriorities } from '@/lib/features/priorities/prioritiesSlice';
 import {
   fetchRequests,
   selectAllRequests,
   selectRequestsError,
   selectRequestsStatus,
 } from '@/lib/features/requests/requestsSlice';
+import { fetchStatuses } from '@/lib/features/statuses/statusesSlice';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import RequestItem from './RequestItem/RequestItem';
 
 import styles from './RequestList.module.scss';
 
@@ -18,6 +21,12 @@ const RequestsList = () => {
   const requests = useAppSelector(selectAllRequests);
   const requestsStatus = useAppSelector(selectRequestsStatus);
   const requestsError = useAppSelector(selectRequestsError);
+
+  useEffect(() => {
+    dispatch(fetchExecutors());
+    dispatch(fetchStatuses());
+    dispatch(fetchPriorities());
+  }, [dispatch]);
 
   useEffect(() => {
     if (requestsStatus === 'idle') {
@@ -33,14 +42,9 @@ const RequestsList = () => {
   } else if (requestsStatus === 'failed') {
     content = <p>{requestsError}</p>;
   } else if (requestsStatus === 'succeeded') {
-    content = requests.map((request, index) => {
-      console.log(request, index);
-      return (
-        <li key={request.id}>
-          <Link href={`/requests/${request.id}`}>{request.name}</Link>
-        </li>
-      );
-    });
+    content = requests.map((request) => (
+      <RequestItem key={request.id} {...request} />
+    ));
   }
 
   return <ul className={styles.list}>{content}</ul>;

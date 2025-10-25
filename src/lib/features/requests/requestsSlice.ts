@@ -1,5 +1,6 @@
 import { RootState } from '@/lib/store';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { PrioritiesName } from '../priorities/prioritiesSlice';
 
 const TENANT_GUID = '995bce8c-fed5-43e8-a86d-2785286240f0';
 const API_PATH = 'http://intravision-task.test01.intravision.ru/';
@@ -26,7 +27,7 @@ const newRequestExample = {
   description: 'Хлопья, кофе, круассан',
 };
 
-interface IRequest {
+export interface IRequest {
   createdAt: string;
   description: string;
   executorGroupId: number;
@@ -39,7 +40,7 @@ interface IRequest {
   name: string;
   price: number;
   priorityId: number;
-  priorityName: string;
+  priorityName: PrioritiesName;
   resolutionDatePlan: string;
   serviceId: number;
   serviceName: string;
@@ -50,6 +51,11 @@ interface IRequest {
   taskTypeId: number;
   taskTypeName: string;
   updatedAt: string;
+}
+
+interface INewRequest {
+  name: string;
+  description: string;
 }
 
 interface IInitialState {
@@ -94,15 +100,15 @@ export const fetchRequests = createAsyncThunk<
 
 export const addNewRequest = createAsyncThunk<
   IRequest,
-  void,
+  INewRequest,
   { state: RootState }
->('requests/addNewRequest', async () => {
+>('requests/addNewRequest', async (newRequest) => {
   const response = await fetch(SINGlE_REQUEST_URL, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(newRequestExample),
+    body: JSON.stringify(newRequest),
   });
 
   if (!response.ok) {

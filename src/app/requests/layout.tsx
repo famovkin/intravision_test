@@ -1,26 +1,23 @@
-import Modal from '@/components/Modal/Modal';
 import Link from 'next/link';
 import React from 'react';
+
 import RequestsList from '@/components/RequestsList/RequestsList';
 
-const path = 'requests';
+export const modalPath = 'requests';
+
+import styles from './request.module.scss';
 
 const RequestsLayout = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div style={{ display: 'flex' }} id={path}>
-      <Link href="/requests/create">Создать заявку</Link>
-      <aside
-        style={{
-          width: '300px',
-          borderRight: '1px solid #ccc',
-          height: 'calc(100vh - 66px)',
-          overflowY: 'auto',
-        }}
-      >
+    <section>
+      <div className={styles.requestsContainer}>
+        <Link className={styles.link} href="/requests/create">
+          Создать заявку
+        </Link>
         <RequestsList />
-      </aside>
-      <Modal path={path}>{children}</Modal>
-    </div>
+      </div>
+      {children}
+    </section>
   );
 };
 

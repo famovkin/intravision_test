@@ -5,7 +5,7 @@ import { RgbType } from '../requests/requestsSlice';
 const GET_REQUEST_URL =
   'http://intravision-task.test01.intravision.ru/api/995bce8c-fed5-43e8-a86d-2785286240f0/Priorities';
 
-type PrioritiesName =
+export type PrioritiesName =
   | 'Очень низкий'
   | 'Низкий'
   | 'Средний'

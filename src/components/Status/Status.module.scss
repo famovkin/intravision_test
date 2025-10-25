@@ -1,0 +1,19 @@
+.status {
+  display: flex;
+  min-width: 80px;
+  max-width: 100px;
+  align-items: center;
+  justify-content: center;
+  padding: 5px 10px;
+  border-radius: 25px;
+}
+
+.text {
+  display: block;
+  overflow: hidden;
+  color: #fff;
+  font-size: 13px;
+  font-weight: 300;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

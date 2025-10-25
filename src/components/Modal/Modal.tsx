@@ -1,6 +1,7 @@
-"use client"
-import React, { FC, useEffect, useState } from 'react';
+'use client';
+import classNames from 'classnames';
 import { usePathname, useRouter } from 'next/navigation';
+import React, { FC, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import styles from './Modal.module.scss';
@@ -8,9 +9,10 @@ import styles from './Modal.module.scss';
 interface IModal {
   children: React.ReactNode;
   path: string;
+  title?: string;
 }
 
-const Modal: FC<IModal> = ({ children, path }) => {
+const Modal: FC<IModal> = ({ children, path, title }) => {
   const [isDocumentMounted, setIsDocumentMounted] = useState(false);
 
   // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -23,17 +25,23 @@ const Modal: FC<IModal> = ({ children, path }) => {
 
   const closeHandler = () => router.push(`/${path}`);
 
-  const container =
-    typeof document !== 'undefined' ? document.getElementById(path) : null;
+  const container = typeof document !== 'undefined' ? document.body : null;
 
   if (!container || !isDocumentMounted) return null;
 
   if (isModalOpen) {
     return createPortal(
-      <div className={styles.modal}>
-        <button onClick={closeHandler}>Закрыть</button>
-        {children}
-      </div>,
+      <section className={styles.modal}>
+        <div className={styles.header}>
+          <h2 className={styles.title}>{title}</h2>
+          {/* Вынести в компонент */}
+          <button className={styles.closeBtn} onClick={closeHandler}>
+            <div className={classNames(styles.line, styles.lineOne)} />
+            <div className={classNames(styles.line, styles.lineTwo)} />
+          </button>
+        </div>
+        <div className={styles.content}>{children}</div>
+      </section>,
       container
     );
   }
