@@ -1,0 +1,15 @@
+.btn {
+  min-width: 150px;
+  padding: 9px 10px;
+  border: none;
+  border-radius: 15px;
+  background: #008cf0;
+  color: var(--white);
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 300;
+}
+
+.disabled {
+  opacity: 0.5;
+}
