@@ -1,10 +1,15 @@
 :root {
-  --background: #fff;
+  --white: #fff;
+  --blue-light: #42aaff;
+  --gray-light: #dae0e7;
+  --topbar-height: 66px;
+  --sidebar-width: 93px;
+  --modal-max-width: 976px;
 }
 
 body {
   overflow: hidden;
-  background: var(--background);
+  background: var(--white);
   font-family: var(--font-roboto), Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

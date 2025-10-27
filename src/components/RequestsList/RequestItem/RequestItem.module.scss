@@ -3,7 +3,7 @@
   height: 55px;
   align-items: center;
   border-top: 1px solid transparent;
-  border-bottom: 1px solid #dae0e7;
+  border-bottom: 1px solid var(--gray-light);
   color: #525460;
   font-family: var(--font-roboto);
   font-weight: 300;
@@ -49,6 +49,6 @@
 @media (max-width: 1600px) {
   .title {
     min-width: 100px;
-    max-width: calc(100vw - 93px - 976px - 130px);
+    max-width: calc(100vw - var(--sidebar-width) - var(--modal-max-width) - 130px);
   }
 }

@@ -1,5 +1,5 @@
 .requestsContainer {
-  height: calc(100vh - 66px);
+  height: calc(100vh - var(--topbar-height));
   overflow-y: auto;
 }
 

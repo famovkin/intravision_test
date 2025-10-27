@@ -19,7 +19,7 @@
 
 .input {
   padding: 5px;
-  border: 1px solid #dae0e7;
+  border: 1px solid var(--gray-light);
   border-radius: 5px;
   background: #f9f9fa;
   font-family: var(--font-ubuntu);
@@ -49,7 +49,7 @@
   border: none;
   border-radius: 15px;
   background: #008cf0;
-  color: #fff;
+  color: var(--white);
   cursor: pointer;
   font-size: 14px;
   font-weight: 300;
