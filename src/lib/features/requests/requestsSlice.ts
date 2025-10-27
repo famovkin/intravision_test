@@ -2,13 +2,11 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import {
   ALL_REQUESTS_URL,
-  API_PATH,
-  SINGlE_REQUEST_URL,
-  TENANT_GUID,
+  SINGlE_REQUEST_URL
 } from '@/lib/constants';
 import { RootState } from '@/lib/store';
-import { PrioritiesName } from '../priorities/prioritiesSlice';
 import { RgbType, StatusesType } from '@/lib/types';
+import { PrioritiesName } from '../priorities/prioritiesSlice';
 
 interface ITag {
   id: number;
