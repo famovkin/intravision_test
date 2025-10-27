@@ -1,18 +1,19 @@
-import { RootState } from '@/lib/store';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { PrioritiesName } from '../priorities/prioritiesSlice';
 
-const TENANT_GUID = '995bce8c-fed5-43e8-a86d-2785286240f0';
-const API_PATH = 'http://intravision-task.test01.intravision.ru/';
-const ALL_REQUESTS_URL = `${API_PATH}odata/tasks?tenantguid=${TENANT_GUID}`;
-const SINGlE_REQUEST_URL = `${API_PATH}api/${TENANT_GUID}/Tasks/`;
+import {
+  ALL_REQUESTS_URL,
+  API_PATH,
+  SINGlE_REQUEST_URL,
+  TENANT_GUID,
+} from '@/lib/constants';
+import { RootState } from '@/lib/store';
+import { PrioritiesName } from '../priorities/prioritiesSlice';
+import { RgbType, StatusesType } from '@/lib/types';
 
 interface ITag {
   id: number;
   name: string;
 }
-
-export type RgbType = `#${string}`;
 
 const editRequestExample = {
   id: 102129,
@@ -20,11 +21,6 @@ const editRequestExample = {
   statusId: 76284,
   tags: [70240],
   executorId: 58143,
-};
-
-const newRequestExample = {
-  name: 'Заказать завтрак',
-  description: 'Хлопья, кофе, круассан',
 };
 
 export interface IRequest {
@@ -60,7 +56,7 @@ interface INewRequest {
 
 interface IInitialState {
   requests: IRequest[];
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  status: StatusesType;
   error: null | string;
 }
 

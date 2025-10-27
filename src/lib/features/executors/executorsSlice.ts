@@ -1,8 +1,8 @@
-import { RootState } from '@/lib/store';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-const GET_REQUEST_URL =
-  'http://intravision-task.test01.intravision.ru/api/995bce8c-fed5-43e8-a86d-2785286240f0/Users';
+import { GET_EXECUTORS_URL } from '@/lib/constants';
+import { RootState } from '@/lib/store';
+import { StatusesType } from '@/lib/types';
 
 // const executorsExample = [
 //   {
@@ -26,7 +26,7 @@ interface IExecutor {
 
 interface IInitialState {
   executors: IExecutor[];
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  status: StatusesType;
   error: null | string;
 }
 
@@ -39,7 +39,7 @@ const initialState: IInitialState = {
 export const fetchExecutors = createAsyncThunk(
   'executors/fetchExecutors',
   async () => {
-    const response = await fetch(GET_REQUEST_URL);
+    const response = await fetch(GET_EXECUTORS_URL);
 
     if (!response.ok) {
       throw new Error('Ошибка получения списка исполнителей');

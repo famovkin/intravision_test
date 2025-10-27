@@ -1,9 +1,8 @@
-import { RootState } from '@/lib/store';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { RgbType } from '../requests/requestsSlice';
 
-const GET_REQUEST_URL =
-  'http://intravision-task.test01.intravision.ru/api/995bce8c-fed5-43e8-a86d-2785286240f0/Priorities';
+import { GET_PRIORITIES_URL } from '@/lib/constants';
+import { RootState } from '@/lib/store';
+import { IColor } from '@/lib/types';
 
 export type PrioritiesName =
   | 'Очень низкий'
@@ -11,11 +10,6 @@ export type PrioritiesName =
   | 'Средний'
   | 'Высокий'
   | 'Критический';
-
-export interface IColor {
-  rgb: RgbType;
-  id: number;
-}
 
 interface IPriority extends IColor {
   name: PrioritiesName;
@@ -32,7 +26,7 @@ const initialState: IInitialState = {
 export const fetchPriorities = createAsyncThunk(
   'priorities/fetchPriorities',
   async () => {
-    const response = await fetch(GET_REQUEST_URL);
+    const response = await fetch(GET_PRIORITIES_URL);
 
     if (!response.ok) {
       throw new Error('Ошибка получения списка приоритетов');

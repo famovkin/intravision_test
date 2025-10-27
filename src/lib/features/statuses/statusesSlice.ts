@@ -1,9 +1,8 @@
-import { RootState } from '@/lib/store';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { IColor } from '../priorities/prioritiesSlice';
 
-const GET_REQUEST_URL =
-  'http://intravision-task.test01.intravision.ru/api/995bce8c-fed5-43e8-a86d-2785286240f0/Statuses';
+import { GET_STATUSES_URL } from '@/lib/constants';
+import { RootState } from '@/lib/store';
+import { IColor } from '@/lib/types';
 
 type StatusName =
   | 'Закрыта'
@@ -28,7 +27,7 @@ const initialState: IInitialState = {
 export const fetchStatuses = createAsyncThunk(
   'statuses/fetchStatuses',
   async () => {
-    const response = await fetch(GET_REQUEST_URL);
+    const response = await fetch(GET_STATUSES_URL);
 
     if (!response.ok) {
       throw new Error('Ошибка получения списка статусов');
