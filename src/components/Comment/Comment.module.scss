@@ -1,0 +1,39 @@
+.commentWrapper {
+  display: flex;
+  gap: 6px;
+}
+
+.avatar {
+  border: 1px solid #9f9ea7;
+  border-radius: 50%;
+  background: #f5f5f5;
+}
+
+.commentContent {
+  width: 100%;
+}
+
+.author {
+  margin-top: 10px;
+  margin-bottom: 8px;
+  color: #525460;
+  font-family: var(--font-ubuntu);
+}
+
+.date {
+  margin-bottom: 12px;
+  color: #63677c;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 12px;
+}
+
+.commentText {
+  min-width: 100%;
+  padding: 10px;
+  border: 1px solid #dce3e7;
+  border-radius: 6px;
+  background: #e3e9f4;
+  color: #060606;
+  font-weight: 300;
+  line-height: 18px;
+}

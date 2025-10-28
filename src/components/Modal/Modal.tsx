@@ -1,6 +1,6 @@
 'use client';
 import { usePathname, useRouter } from 'next/navigation';
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useCallback, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
 
 import CloseBtn from '../CloseBtn/CloseBtn';
@@ -24,7 +24,10 @@ const Modal: FC<IModal> = ({ children, path, title }) => {
   const isModalOpen =
     pathname?.startsWith(`/${path}/`) && pathname !== `/${path}`;
 
-  const closeHandler = () => router.push(`/${path}`);
+  const closeHandler = useCallback(
+    () => router.push(`/${path}`),
+    [path, router]
+  );
 
   const container = typeof document !== 'undefined' ? document.body : null;
 

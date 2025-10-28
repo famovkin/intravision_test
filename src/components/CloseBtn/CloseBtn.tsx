@@ -1,5 +1,5 @@
-import { FC } from 'react';
 import classNames from 'classnames';
+import React, { FC } from 'react';
 
 import styles from './CloseBtn.module.scss';
 
@@ -21,4 +21,4 @@ const CloseBtn: FC<ICloseBtn> = ({ modificator, ...props }) => {
   );
 };
 
-export default CloseBtn;
+export default React.memo(CloseBtn);

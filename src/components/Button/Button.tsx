@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { FC } from 'react';
+import React, { FC } from 'react';
 
 import styles from './Button.module.scss';
 
@@ -29,4 +29,4 @@ const Button: FC<IButton> = ({
   );
 };
 
-export default Button;
+export default React.memo(Button);

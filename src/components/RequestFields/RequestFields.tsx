@@ -6,7 +6,7 @@ import { useAppSelector } from '@/lib/hooks';
 import InfoField from '../InfoField/InfoField';
 import Tag from '../Tag/Tag';
 
-import { formatDateString } from '@/utils/utils';
+import { formatDateShort } from '@/utils/utils';
 
 import styles from './RequestFields.module.scss';
 
@@ -61,7 +61,7 @@ const RequestFields = () => {
           <div className={styles.infoDate}>
             <Image src="/calendar.png" width={18} height={15} alt="Календарь" />
             <p className={styles.infoItemText}>
-              {formatDateString(request?.resolutionDatePlan)}
+              {formatDateShort(request?.resolutionDatePlan)}
             </p>
           </div>
         </InfoField>

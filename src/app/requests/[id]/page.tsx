@@ -1,14 +1,10 @@
 'use client';
-import { usePathname } from 'next/navigation';
-
 import Modal from '@/components/Modal/Modal';
 import RequestContent from '@/components/RequestContent/RequestContent';
 import RequestFields from '@/components/RequestFields/RequestFields';
-import {
-  editRequest,
-  selectRequestById,
-} from '@/lib/features/requests/requestsSlice';
-import { useAppDispatch, useAppSelector } from '@/lib/hooks';
+import useGetRequestData from '@/hooks/useGetRequestData';
+import { editRequest } from '@/lib/features/requests/requestsSlice';
+import { useAppDispatch } from '@/lib/hooks';
 
 import { modalPath } from '../layout';
 
@@ -16,12 +12,7 @@ import styles from './requestIdPage.module.scss';
 
 const EditForm = () => {
   const dispatch = useAppDispatch();
-  const pathname = usePathname();
-  const requestId = pathname?.split('/').at(-1);
-
-  const request = useAppSelector((state) =>
-    selectRequestById(state, Number(requestId))
-  );
+  const request = useGetRequestData();
 
   console.log('>>>', request);
 
