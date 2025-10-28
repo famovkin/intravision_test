@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { FC } from 'react';
+import React, { FC } from 'react';
 
 import styles from './InfoField.module.scss';
 
@@ -37,4 +37,4 @@ const InfoField: FC<IInfoField> = ({
   );
 };
 
-export default InfoField;
+export default React.memo(InfoField);

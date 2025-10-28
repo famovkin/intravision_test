@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { FC } from 'react';
+import React, { FC } from 'react';
 
 import Status from '@/components/Status/Status';
 import { IRequest } from '@/lib/features/requests/requestsSlice';
@@ -36,4 +36,4 @@ const RequestItem: FC<IRequest> = ({
   );
 };
 
-export default RequestItem;
+export default React.memo(RequestItem);

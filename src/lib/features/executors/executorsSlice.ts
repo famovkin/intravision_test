@@ -4,22 +4,7 @@ import { GET_EXECUTORS_URL } from '@/lib/constants';
 import { RootState } from '@/lib/store';
 import { StatusesType } from '@/lib/types';
 
-// const executorsExample = [
-//   {
-//     id: 58142,
-//     name: 'Сидоров Иван',
-//   },
-//   {
-//     id: 58143,
-//     name: 'Петров Борис',
-//   },
-//   {
-//     id: 58144,
-//     name: 'Иванов Андрей',
-//   },
-// ];
-
-interface IExecutor {
+export interface IExecutor {
   id: number;
   name: string;
 }

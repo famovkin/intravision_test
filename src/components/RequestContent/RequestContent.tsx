@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { ChangeEvent, useCallback, useState } from 'react';
 
 import useGetRequestData from '@/hooks/useGetRequestData';
 import Button from '../Button/Button';
@@ -33,6 +33,11 @@ const RequestContent = () => {
     setComment('');
   }, [comment]);
 
+  const onInputHandler = useCallback(
+    (e: ChangeEvent<HTMLTextAreaElement>) => setComment(e.target.value),
+    []
+  );
+
   return (
     <div className={styles.contentWrapper}>
       <p className={styles.descriptionTitle}>Описание</p>
@@ -41,7 +46,7 @@ const RequestContent = () => {
       <Textarea
         name="comment"
         value={comment}
-        onChange={(e) => setComment(e.target.value)}
+        onChange={onInputHandler}
         placeholder="Добавление комментариев"
         modificator={styles.commentInput}
       />

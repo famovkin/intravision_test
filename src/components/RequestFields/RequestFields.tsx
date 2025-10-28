@@ -1,9 +1,16 @@
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import { useCallback } from 'react';
 
-import { selectRequestById } from '@/lib/features/requests/requestsSlice';
-import { useAppSelector } from '@/lib/hooks';
+import { selectAllExecutors } from '@/lib/features/executors/executorsSlice';
+import {
+  editRequest,
+  selectRequestById,
+} from '@/lib/features/requests/requestsSlice';
+import { selectAllStatuses } from '@/lib/features/statuses/statusesSlice';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import InfoField from '../InfoField/InfoField';
+import Select from '../Select/Select';
 import Tag from '../Tag/Tag';
 
 import { formatDateShort } from '@/utils/utils';
@@ -11,19 +18,33 @@ import { formatDateShort } from '@/utils/utils';
 import styles from './RequestFields.module.scss';
 
 const RequestFields = () => {
+  const dispatch = useAppDispatch();
   const pathname = usePathname();
   const requestId = pathname?.split('/').at(-1);
   const request = useAppSelector((state) =>
     selectRequestById(state, Number(requestId))
   );
 
-  if (!request) {
-    return (
-      <div className={styles.contentWrapper}>
-        <p>Загрузка</p>
-      </div>
-    );
-  }
+  const statuses = useAppSelector(selectAllStatuses);
+  const executors = useAppSelector(selectAllExecutors);
+
+  const onEdit = useCallback(
+    (editFields: { [key: string]: number }) => {
+      if (request) {
+        const updatedFieldWithRequestId = {
+          executorId: request.executorId,
+          statusId: request.statusId,
+          id: request.id,
+          ...editFields,
+        };
+
+        dispatch(editRequest(updatedFieldWithRequestId));
+      }
+    },
+    [dispatch, request]
+  );
+
+  if (!request) return null;
 
   return (
     <div className={styles.contentWrapper}>
@@ -32,9 +53,15 @@ const RequestFields = () => {
           style={{ background: request?.statusRgb }}
           className={styles.statusIndicator}
         />
-        <span className={styles.status}>{request?.statusName}</span>
+        <div className={styles.status}>
+          <Select
+            options={statuses}
+            activeOption={request.statusId}
+            onChange={onEdit}
+            fieldName="statusId"
+          />
+        </div>
       </div>
-
       <InfoField
         title="Заявитель"
         text={request?.initiatorName}
@@ -47,9 +74,15 @@ const RequestFields = () => {
       />
       <InfoField
         title="Исполнитель"
-        text={request?.executorName}
         wrapperModificator={styles.commonInfoWrapper}
-      />
+      >
+        <Select
+          options={executors}
+          activeOption={request.executorId}
+          onChange={onEdit}
+          fieldName="executorId"
+        />
+      </InfoField>
       <InfoField
         title="Приоритет"
         text={request?.priorityName}

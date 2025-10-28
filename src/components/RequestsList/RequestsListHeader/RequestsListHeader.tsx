@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 
+import itemStyles from '../RequestItem/RequestItem.module.scss';
 import styles from './RequestListHeader.module.scss';
-import itemStyles from '../RequestItem/RequestItem.module.scss'
 
 const RequestsListHeader = () => {
   return (

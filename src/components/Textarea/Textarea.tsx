@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import classNames from 'classnames';
 import styles from './Textarea.module.scss';
 
@@ -25,4 +25,4 @@ const Textarea: FC<ITextarea> = ({ name, label, modificator, ...props }) => {
   );
 };
 
-export default Textarea;
+export default React.memo(Textarea);

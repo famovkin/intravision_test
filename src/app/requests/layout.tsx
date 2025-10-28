@@ -1,8 +1,7 @@
-import Link from 'next/link';
 import React from 'react';
 
-import Button from '@/components/Button/Button';
 import RequestsList from '@/components/RequestsList/RequestsList';
+import RequestsHeader from '@/components/RequestsHeader/RequestsHeader';
 
 export const modalPath = 'requests';
 
@@ -12,11 +11,7 @@ const RequestsLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <section>
       <div className={styles.requestsWrapper}>
-        <div className={styles.btnWrapper}>
-          <Link href="/requests/create">
-            <Button>Создать заявку</Button>
-          </Link>
-        </div>
+        <RequestsHeader />
         <RequestsList />
       </div>
       {children}

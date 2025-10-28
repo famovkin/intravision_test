@@ -6,12 +6,15 @@
 }
 
 .statusWrapper {
+  display: flex;
+  align-items: center;
   margin-bottom: 36px;
 }
 
 .statusIndicator {
   display: inline-block;
   width: 10px;
+  min-width: 10px;
   height: 10px;
   border-radius: 50%;
   margin-right: 10px;

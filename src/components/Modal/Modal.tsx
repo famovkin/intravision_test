@@ -49,4 +49,4 @@ const Modal: FC<IModal> = ({ children, path, title }) => {
   return null;
 };
 
-export default Modal;
+export default React.memo(Modal);

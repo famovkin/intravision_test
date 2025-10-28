@@ -10,14 +10,6 @@ interface ITag {
   name: string;
 }
 
-const editRequestExample = {
-  id: 102129,
-  comment: 'string',
-  statusId: 76284,
-  tags: [70240],
-  executorId: 58143,
-};
-
 export interface IRequest {
   createdAt: string;
   description: string;
@@ -47,6 +39,12 @@ export interface IRequest {
 interface INewRequest {
   name: string;
   description: string;
+}
+
+export interface IEditRequest {
+  id: number;
+  statusId?: number;
+  executorId?: number;
 }
 
 interface IInitialState {
@@ -81,7 +79,7 @@ export const fetchRequests = createAsyncThunk<
   {
     condition: (_, { getState }) => {
       const { requests } = getState();
-      if (requests.status === 'loading' || requests.status === 'succeeded') {
+      if (requests.status === 'loading') {
         return false;
       }
       return true;
@@ -127,21 +125,26 @@ export const addNewRequest = createAsyncThunk<
 
 export const editRequest = createAsyncThunk<
   IRequest,
-  void,
+  IEditRequest,
   { state: RootState }
->('requests/editRequest', async () => {
+>('requests/editRequest', async (editRequestData) => {
+  if (!editRequestData.executorId && !editRequestData.statusId) {
+    return;
+  }
+
   const response = await fetch(SINGlE_REQUEST_URL, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(editRequestExample),
+    body: JSON.stringify(editRequestData),
   });
 
   if (!response.ok) {
     throw new Error('Ошибка при создании новой заявки');
   }
 
-  // TODO: поправить логику
-  const newRequestResponse = await fetch(`${SINGlE_REQUEST_URL}${102129}`);
+  const newRequestResponse = await fetch(
+    `${SINGlE_REQUEST_URL}${editRequestData.id}`
+  );
 
   if (!newRequestResponse.ok) {
     throw new Error('Ошибка получения информации о заявке');
@@ -163,7 +166,7 @@ const requestsSlice = createSlice({
       })
       .addCase(fetchRequests.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.requests = state.requests.concat(action.payload);
+        state.requests = action.payload;
       })
       .addCase(fetchRequests.rejected, (state, action) => {
         state.status = 'failed';
@@ -174,8 +177,10 @@ const requestsSlice = createSlice({
         state.requests.push(action.payload);
       })
       .addCase(editRequest.fulfilled, (state, action) => {
-        // state.status = 'succeeded';
-        // state.requests.push(action.payload);
+        const updatedRequestIndex = state.requests.findIndex(
+          (request) => request.id === action.payload.id
+        );
+        state.requests[updatedRequestIndex] = action.payload;
       });
   },
 });

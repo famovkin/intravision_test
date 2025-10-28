@@ -12,7 +12,7 @@ type StatusName =
   | 'Открыта'
   | 'Выполнена';
 
-interface IStatus extends IColor {
+export interface IStatus extends IColor {
   name: StatusName;
 }
 

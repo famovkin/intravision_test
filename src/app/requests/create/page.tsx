@@ -2,14 +2,14 @@
 import { addNewRequest } from '@/lib/features/requests/requestsSlice';
 import { useAppDispatch } from '@/lib/hooks';
 import { useRouter } from 'next/navigation';
-import { FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useCallback, useState } from 'react';
 
 import Button from '@/components/Button/Button';
-import Modal from '@/components/Modal/Modal';
-import Textarea from '@/components/Textarea/Textarea';
 import FetchStatus, {
   FetchStatusTypes,
 } from '@/components/FetchStatus/FetchStatus';
+import Modal from '@/components/Modal/Modal';
+import Textarea from '@/components/Textarea/Textarea';
 
 import { StatusesType } from '@/lib/types';
 import { modalPath } from '../layout';
@@ -51,6 +51,16 @@ const CreateRequestForm = () => {
     }
   };
 
+  const onTitleInput = useCallback(
+    (e: ChangeEvent<HTMLTextAreaElement>) => setTitle(e.target.value),
+    []
+  );
+
+  const onDescriptionInput = useCallback(
+    (e: ChangeEvent<HTMLTextAreaElement>) => setDescription(e.target.value),
+    []
+  );
+
   return (
     <Modal path={modalPath} title="Новая заявка">
       <form className={styles.form} onSubmit={onCreateHandler}>
@@ -60,14 +70,14 @@ const CreateRequestForm = () => {
             label="Название"
             modificator={styles.title}
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={onTitleInput}
           />
           <Textarea
             name="description"
             label="Описание"
             modificator={styles.description}
             value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={onDescriptionInput}
           />
 
           {status === 'failed' && (

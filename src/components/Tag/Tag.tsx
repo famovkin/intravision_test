@@ -1,5 +1,5 @@
 import classNames from 'classnames';
-import { FC } from 'react';
+import React, { FC } from 'react';
 
 import styles from './Tag.module.scss';
 
@@ -20,4 +20,4 @@ const Tag: FC<ITag> = ({ children, modificator }) => {
   );
 };
 
-export default Tag;
+export default React.memo(Tag);
