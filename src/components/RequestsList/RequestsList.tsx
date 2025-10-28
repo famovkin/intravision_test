@@ -38,7 +38,7 @@ const RequestsList = () => {
 
   if (requestsStatus === 'loading') {
     // TODO: сделать спиннер
-    content = <p>Загрузка</p>;
+    content = <p>Загрузка листа</p>;
   } else if (requestsStatus === 'failed') {
     content = <p>{requestsError}</p>;
   } else if (requestsStatus === 'succeeded') {

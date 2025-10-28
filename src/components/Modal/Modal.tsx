@@ -1,15 +1,16 @@
 'use client';
-import classNames from 'classnames';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { FC, useEffect, useState } from 'react';
 import { createPortal } from 'react-dom';
+
+import CloseBtn from '../CloseBtn/CloseBtn';
 
 import styles from './Modal.module.scss';
 
 interface IModal {
   children: React.ReactNode;
   path: string;
-  title?: string;
+  title?: React.ReactNode;
 }
 
 const Modal: FC<IModal> = ({ children, path, title }) => {
@@ -33,12 +34,8 @@ const Modal: FC<IModal> = ({ children, path, title }) => {
     return createPortal(
       <section className={styles.modal}>
         <div className={styles.header}>
-          <h2 className={styles.title}>{title}</h2>
-          {/* Вынести в компонент */}
-          <button className={styles.closeBtn} onClick={closeHandler}>
-            <div className={classNames(styles.line, styles.lineOne)} />
-            <div className={classNames(styles.line, styles.lineTwo)} />
-          </button>
+          <div className={styles.title}>{title}</div>
+          <CloseBtn onClick={closeHandler} />
         </div>
         <div className={styles.content}>{children}</div>
       </section>,

@@ -1,9 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import {
-  ALL_REQUESTS_URL,
-  SINGlE_REQUEST_URL
-} from '@/lib/constants';
+import { ALL_REQUESTS_URL, SINGlE_REQUEST_URL } from '@/lib/constants';
 import { RootState } from '@/lib/store';
 import { RgbType, StatusesType } from '@/lib/types';
 import { PrioritiesName } from '../priorities/prioritiesSlice';
@@ -102,7 +99,12 @@ export const addNewRequest = createAsyncThunk<
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify(newRequest),
+    body: JSON.stringify({
+      ...newRequest,
+      // Значения по умолчанию
+      resolutionDatePlan: '2026-12-31T00:00:00.2939101+03:00',
+      tags: [70240],
+    }),
   });
 
   if (!response.ok) {
@@ -179,6 +181,8 @@ const requestsSlice = createSlice({
 });
 
 export const selectAllRequests = (state: RootState) => state.requests.requests;
+export const selectRequestById = (state: RootState, id: number) =>
+  state.requests.requests.find((request) => request.id === id);
 export const selectRequestsStatus = (state: RootState) => state.requests.status;
 export const selectRequestsError = (state: RootState) => state.requests.error;
 

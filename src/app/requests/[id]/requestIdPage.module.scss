@@ -1,0 +1,17 @@
+.id {
+  display: inline-block;
+}
+
+.title {
+  display: -webkit-box;
+  overflow: hidden;
+  -webkit-box-orient: vertical;
+  font-weight: 300;
+  -webkit-line-clamp: 2;
+  word-break: break-all;
+}
+
+.wrapper {
+  display: flex;
+  min-height: 100%;
+}

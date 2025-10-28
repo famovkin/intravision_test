@@ -9,7 +9,12 @@ interface IButton extends React.ButtonHTMLAttributes<HTMLButtonElement> {
   isEnable?: boolean;
 }
 
-const Button: FC<IButton> = ({ children, modificator, isEnable, ...props }) => {
+const Button: FC<IButton> = ({
+  children,
+  modificator,
+  isEnable = true,
+  ...props
+}) => {
   return (
     <button
       className={classNames(styles.btn, {
