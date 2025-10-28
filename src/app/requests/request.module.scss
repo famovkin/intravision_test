@@ -1,10 +1,17 @@
-.requestsContainer {
+.requestsWrapper {
   height: calc(100vh - var(--topbar-height));
   overflow-y: auto;
 }
 
-.link {
-  display: inline-block;
-  height: 120px;
-  border: 1px solid green;
+.btnWrapper {
+  display: flex;
+  height: 78px;
+  align-items: center;
+  padding-left: 264px;
+}
+
+@media (max-width: 1550px) {
+  .btnWrapper {
+    padding-left: 17px;
+  }
 }

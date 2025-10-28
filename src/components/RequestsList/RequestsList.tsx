@@ -12,6 +12,7 @@ import {
 import { fetchStatuses } from '@/lib/features/statuses/statusesSlice';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import RequestItem from './RequestItem/RequestItem';
+import RequestsListHeader from './RequestsListHeader/RequestsListHeader';
 
 import styles from './RequestList.module.scss';
 
@@ -47,7 +48,12 @@ const RequestsList = () => {
     ));
   }
 
-  return <ul className={styles.list}>{content}</ul>;
+  return (
+    <ul className={styles.list}>
+      <RequestsListHeader />
+      {content}
+    </ul>
+  );
 };
 
 export default RequestsList;

@@ -19,14 +19,18 @@ const RequestItem: FC<IRequest> = ({
   return (
     <li>
       <Link className={styles.item} href={`/requests/${id}`}>
-        <RequestId id={id} priorityId={priorityId} priority={priorityName} />
-        <div className={styles.title}>
+        <div className={styles.idWrapper}>
+          <RequestId id={id} priorityId={priorityId} priority={priorityName} />
+        </div>
+        <div className={styles.titleWrapper}>
           <p>{name}</p>
         </div>
         <div className={styles.statusWrapper}>
           <Status text={statusName} color={statusRgb} />
         </div>
-        <p className={styles.executor}>{executorName}</p>
+        <div className={styles.executorWrapper}>
+          <p className={styles.executor}>{executorName}</p>
+        </div>
       </Link>
     </li>
   );
