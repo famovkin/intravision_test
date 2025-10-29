@@ -1,6 +1,6 @@
 import { FC } from 'react';
 
-import { RgbType } from '@/lib/types';
+import { RgbType } from '@/types/types';
 
 import styles from './Status.module.scss';
 

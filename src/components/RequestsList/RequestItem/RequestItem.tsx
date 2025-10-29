@@ -2,7 +2,7 @@ import Link from 'next/link';
 import React, { FC } from 'react';
 
 import Status from '@/components/Status/Status';
-import { IRequest } from '@/lib/features/requests/requestsSlice';
+import { IRequest } from '@/types/types';
 import RequestId from '../RequestId/RequestId';
 
 import styles from './RequestItem.module.scss';

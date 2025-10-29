@@ -2,14 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { GET_PRIORITIES_URL } from '@/lib/constants';
 import { RootState } from '@/lib/store';
-import { IColor } from '@/lib/types';
-
-export type PrioritiesName =
-  | 'Очень низкий'
-  | 'Низкий'
-  | 'Средний'
-  | 'Высокий'
-  | 'Критический';
+import { IColor, PrioritiesName } from '@/types/types';
 
 interface IPriority extends IColor {
   name: PrioritiesName;

@@ -58,7 +58,7 @@ const RequestFields = () => {
 
   return (
     <div className={styles.contentWrapper}>
-      {<p className={styles.error}>{editError}</p>}
+      {editError && <p className={styles.error}>{editError}</p>}
       <div className={styles.statusWrapper}>
         <span
           style={{ background: request?.statusRgb }}

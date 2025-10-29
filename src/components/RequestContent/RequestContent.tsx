@@ -17,20 +17,23 @@ const defaultAuthor: IAuthor = {
 
 const RequestContent = () => {
   const [comment, setComment] = useState('');
+  console.log(comment);
   const [commentsList, setCommentsList] = useState<IComment[]>([]);
   // Тут локальное состояние, так как бэк не сохраняет и не отдает комментарии
   const { request } = useGetRequestData();
 
   const onSendCommentHandler = useCallback(() => {
-    setCommentsList((prev) => [
-      ...prev,
-      {
-        text: comment,
-        author: defaultAuthor,
-        date: new Date(),
-      },
-    ]);
-    setComment('');
+    if (comment) {
+      setCommentsList((prev) => [
+        ...prev,
+        {
+          text: comment,
+          author: defaultAuthor,
+          date: new Date(),
+        },
+      ]);
+      setComment('');
+    }
   }, [comment]);
 
   const onInputHandler = useCallback(
@@ -51,7 +54,11 @@ const RequestContent = () => {
         modificator={styles.commentInput}
       />
 
-      <Button modificator={styles.btnSave} onClick={onSendCommentHandler}>
+      <Button
+        modificator={styles.btnSave}
+        onClick={onSendCommentHandler}
+        isEnable={Boolean(comment)}
+      >
         Сохранить
       </Button>
 

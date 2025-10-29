@@ -13,7 +13,7 @@ const formatDateShort = (dateString: string | undefined) => {
   }
 };
 
-function formatDateWithTime(date: Date): string {
+const formatDateWithTime = (date: Date): string => {
   // ДД месяц, чч:мм
   const day = date.getDate();
   const month = months[date.getMonth()];
@@ -21,6 +21,6 @@ function formatDateWithTime(date: Date): string {
   const minutes = date.getMinutes().toString().padStart(2, '0');
 
   return `${day} ${month}, ${hours}:${minutes}`;
-}
+};
 
 export { formatDateShort, formatDateWithTime };

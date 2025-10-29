@@ -2,15 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { GET_STATUSES_URL } from '@/lib/constants';
 import { RootState } from '@/lib/store';
-import { IColor } from '@/lib/types';
-
-type StatusName =
-  | 'Закрыта'
-  | 'Отложена'
-  | 'Согласование договора'
-  | 'В работе'
-  | 'Открыта'
-  | 'Выполнена';
+import { IColor, StatusName } from '@/types/types';
 
 export interface IStatus extends IColor {
   name: StatusName;

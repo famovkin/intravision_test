@@ -3,12 +3,12 @@ import React, { FC } from 'react';
 
 import styles from './Tag.module.scss';
 
-interface ITag {
+interface ITagProps {
   children: React.ReactNode;
   modificator?: string;
 }
 
-const Tag: FC<ITag> = ({ children, modificator }) => {
+const Tag: FC<ITagProps> = ({ children, modificator }) => {
   return (
     <span
       className={classNames(styles.tag, {

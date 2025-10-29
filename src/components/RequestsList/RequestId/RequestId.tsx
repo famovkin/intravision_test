@@ -1,10 +1,8 @@
 import { FC, useMemo } from 'react';
 
-import {
-  PrioritiesName,
-  selectPriorities,
-} from '@/lib/features/priorities/prioritiesSlice';
+import { selectPriorities } from '@/lib/features/priorities/prioritiesSlice';
 import { useAppSelector } from '@/lib/hooks';
+import { PrioritiesName } from '@/types/types';
 
 import styles from './RequestId.module.scss';
 

@@ -2,39 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { ALL_REQUESTS_URL, SINGlE_REQUEST_URL } from '@/lib/constants';
 import { RootState } from '@/lib/store';
-import { RgbType, StatusesType } from '@/lib/types';
-import { PrioritiesName } from '../priorities/prioritiesSlice';
-
-interface ITag {
-  id: number;
-  name: string;
-}
-
-export interface IRequest {
-  createdAt: string;
-  description: string;
-  executorGroupId: number;
-  executorGroupName: string;
-  executorId: number;
-  executorName: string;
-  id: number;
-  initiatorId: number;
-  initiatorName: string;
-  name: string;
-  price: number;
-  priorityId: number;
-  priorityName: PrioritiesName;
-  resolutionDatePlan: string;
-  serviceId: number;
-  serviceName: string;
-  statusId: number;
-  statusName: string;
-  statusRgb: RgbType;
-  tags: ITag[];
-  taskTypeId: number;
-  taskTypeName: string;
-  updatedAt: string;
-}
+import { IRequest, StatusesType } from '@/types/types';
 
 interface INewRequest {
   name: string;
