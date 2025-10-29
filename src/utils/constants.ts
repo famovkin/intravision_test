@@ -13,4 +13,6 @@ const months = [
   'декабря',
 ];
 
-export { months };
+const modalPath = 'requests';
+
+export { months, modalPath };

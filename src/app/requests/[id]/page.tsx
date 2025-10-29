@@ -10,7 +10,7 @@ import {
 } from '@/lib/features/requests/requestsSlice';
 import { useAppSelector } from '@/lib/hooks';
 
-import { modalPath } from '../layout';
+import { modalPath } from '@/utils/constants';
 
 import styles from './requestIdPage.module.scss';
 

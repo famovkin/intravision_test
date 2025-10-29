@@ -12,7 +12,7 @@ import Modal from '@/components/Modal/Modal';
 import Textarea from '@/components/Textarea/Textarea';
 
 import { StatusesType } from '@/lib/types';
-import { modalPath } from '../layout';
+import { modalPath } from '@/utils/constants';
 
 import styles from './create.module.scss';
 

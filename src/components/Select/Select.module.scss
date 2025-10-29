@@ -1,6 +1,6 @@
 .selectWrapper {
   position: relative;
-  color: #525460;
+  color: var(--gray-dark);
   cursor: pointer;
   font-size: 15px;
   font-weight: 300;
@@ -15,7 +15,7 @@
   padding: 10px 0;
   border-radius: 10px;
   background: var(--white);
-  box-shadow: 0 4px 12px 0 #30465726;
+  box-shadow: 0 4px 12px 0 var(--shadow);
 }
 
 .optionItem {
@@ -25,7 +25,7 @@
 }
 
 .error {
-  color: red;
+  color: var(--red);
   font-size: 15px;
 }
 

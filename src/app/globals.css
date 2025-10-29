@@ -1,10 +1,15 @@
 :root {
   --white: #fff;
+  --red: #cc0d0d;
   --blue-light: #42aaff;
   --gray-light: #dae0e7;
+  --gray-medium: #9f9ea7;
+  --gray-dark: #525460;
   --topbar-height: 66px;
   --sidebar-width: 93px;
   --modal-max-width: 976px;
+  --shadow: #30465726;
+  --black: #030303;
 }
 
 body {
