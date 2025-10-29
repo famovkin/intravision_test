@@ -1,4 +1,8 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import {
+  createAsyncThunk,
+  createSlice,
+  createSelector,
+} from '@reduxjs/toolkit';
 
 import { ALL_REQUESTS_URL, SINGlE_REQUEST_URL } from '@/lib/constants';
 import { RootState } from '@/lib/store';
@@ -166,5 +170,10 @@ export const selectRequestsStatus = (state: RootState) => state.requests.status;
 export const selectRequestsError = (state: RootState) => state.requests.error;
 export const selectRequestEditError = (state: RootState) =>
   state.requests.editError;
+
+export const selectAllRequestsMemo = createSelector(
+  [selectAllRequests],
+  (requests) => requests
+);
 
 export default requestsSlice.reducer;

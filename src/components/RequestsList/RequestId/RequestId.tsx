@@ -20,7 +20,7 @@ const RequestId: FC<IRequestId> = ({ id, priorityId, priority }) => {
       (priority) => priority.id === priorityId
     );
 
-    return currentPriority?.rgb || 'red';
+    return currentPriority?.rgb || '#525460';
   }, [priorityId, priorities]);
 
   const normalizedColor = badgeColor.startsWith('#')

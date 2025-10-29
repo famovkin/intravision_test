@@ -1,4 +1,8 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import {
+  createAsyncThunk,
+  createSelector,
+  createSlice,
+} from '@reduxjs/toolkit';
 
 import { GET_EXECUTORS_URL } from '@/lib/constants';
 import { RootState } from '@/lib/store';
@@ -51,5 +55,9 @@ const executorsSlice = createSlice({
 export const selectAllExecutors = (state: RootState) =>
   state.executors.executors;
 export const selectExecutorsError = (state: RootState) => state.executors.error;
+export const selectAllExecutorsMemo = createSelector(
+  [selectAllExecutors],
+  (executors) => executors
+);
 
 export default executorsSlice.reducer;

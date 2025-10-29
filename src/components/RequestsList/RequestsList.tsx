@@ -5,7 +5,7 @@ import { fetchExecutors } from '@/lib/features/executors/executorsSlice';
 import { fetchPriorities } from '@/lib/features/priorities/prioritiesSlice';
 import {
   fetchRequests,
-  selectAllRequests,
+  selectAllRequestsMemo,
   selectRequestsError,
   selectRequestsStatus,
 } from '@/lib/features/requests/requestsSlice';
@@ -20,7 +20,7 @@ import styles from './RequestList.module.scss';
 const RequestsList = () => {
   const dispatch = useAppDispatch();
 
-  const requests = useAppSelector(selectAllRequests);
+  const requests = useAppSelector(selectAllRequestsMemo);
   const requestsStatus = useAppSelector(selectRequestsStatus);
   const requestsError = useAppSelector(selectRequestsError);
 

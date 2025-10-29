@@ -3,7 +3,7 @@ import { usePathname } from 'next/navigation';
 import { useCallback } from 'react';
 
 import {
-  selectAllExecutors,
+  selectAllExecutorsMemo,
   selectExecutorsError,
 } from '@/lib/features/executors/executorsSlice';
 import {
@@ -12,7 +12,7 @@ import {
   selectRequestEditError,
 } from '@/lib/features/requests/requestsSlice';
 import {
-  selectAllStatuses,
+  selectAllStatusesMemo,
   selectStatusesError,
 } from '@/lib/features/statuses/statusesSlice';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
@@ -32,8 +32,8 @@ const RequestFields = () => {
     selectRequestById(state, Number(requestId))
   );
 
-  const statuses = useAppSelector(selectAllStatuses);
-  const executors = useAppSelector(selectAllExecutors);
+  const statuses = useAppSelector(selectAllStatusesMemo);
+  const executors = useAppSelector(selectAllExecutorsMemo);
   const editError = useAppSelector(selectRequestEditError);
   const statusesError = useAppSelector(selectStatusesError);
   const executorsError = useAppSelector(selectExecutorsError);
