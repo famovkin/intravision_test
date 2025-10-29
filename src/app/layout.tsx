@@ -19,7 +19,10 @@ const ubuntu = Ubuntu({
 });
 
 export const metadata: Metadata = {
-  title: 'IntraVision',
+  title: {
+    default: 'IntraVision',
+    template: '%s | IntraVision',
+  },
   description: 'Тестовое задание в IntraVision',
 };
 
