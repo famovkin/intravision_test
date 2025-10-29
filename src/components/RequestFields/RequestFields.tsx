@@ -2,12 +2,19 @@ import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { useCallback } from 'react';
 
-import { selectAllExecutors } from '@/lib/features/executors/executorsSlice';
+import {
+  selectAllExecutors,
+  selectExecutorsError,
+} from '@/lib/features/executors/executorsSlice';
 import {
   editRequest,
   selectRequestById,
+  selectRequestEditError,
 } from '@/lib/features/requests/requestsSlice';
-import { selectAllStatuses } from '@/lib/features/statuses/statusesSlice';
+import {
+  selectAllStatuses,
+  selectStatusesError,
+} from '@/lib/features/statuses/statusesSlice';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import InfoField from '../InfoField/InfoField';
 import Select from '../Select/Select';
@@ -27,6 +34,9 @@ const RequestFields = () => {
 
   const statuses = useAppSelector(selectAllStatuses);
   const executors = useAppSelector(selectAllExecutors);
+  const editError = useAppSelector(selectRequestEditError);
+  const statusesError = useAppSelector(selectStatusesError);
+  const executorsError = useAppSelector(selectExecutorsError);
 
   const onEdit = useCallback(
     (editFields: { [key: string]: number }) => {
@@ -48,6 +58,7 @@ const RequestFields = () => {
 
   return (
     <div className={styles.contentWrapper}>
+      {<p className={styles.error}>{editError}</p>}
       <div className={styles.statusWrapper}>
         <span
           style={{ background: request?.statusRgb }}
@@ -59,6 +70,7 @@ const RequestFields = () => {
             activeOption={request.statusId}
             onChange={onEdit}
             fieldName="statusId"
+            error={statusesError}
           />
         </div>
       </div>
@@ -81,6 +93,7 @@ const RequestFields = () => {
           activeOption={request.executorId}
           onChange={onEdit}
           fieldName="executorId"
+          error={executorsError}
         />
       </InfoField>
       <InfoField

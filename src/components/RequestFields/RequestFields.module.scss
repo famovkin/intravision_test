@@ -59,6 +59,12 @@
   gap: 5px;
 }
 
+.error {
+  margin-bottom: 15px;
+  color: red;
+  font-size: 15px;
+}
+
 @media (max-width: 800px) {
   .contentWrapper {
     min-width: unset;

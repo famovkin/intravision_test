@@ -1,4 +1,4 @@
-import styles from './page.module.css';
+import Title from '@/components/Title/Title';
 
 // Для тестирование глобальной ошибки
 // const errorCallHandler = () => {
@@ -8,7 +8,7 @@ import styles from './page.module.css';
 export default function Home() {
   return (
     <>
-      <h1 className={styles.header}>Главная страница</h1>
+      <Title text="Главная страница" />
       {/* <button onClick={errorCallHandler}>call</button> */}
     </>
   );

@@ -18,10 +18,12 @@ export interface IStatus extends IColor {
 
 interface IInitialState {
   statuses: IStatus[];
+  error: string | null;
 }
 
 const initialState: IInitialState = {
   statuses: [],
+  error: null,
 };
 
 export const fetchStatuses = createAsyncThunk(
@@ -30,7 +32,7 @@ export const fetchStatuses = createAsyncThunk(
     const response = await fetch(GET_STATUSES_URL);
 
     if (!response.ok) {
-      throw new Error('Ошибка получения списка статусов');
+      throw new Error('Ошибка получения статусов');
     }
 
     const res = await response.json();
@@ -44,12 +46,17 @@ const statusesSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchStatuses.fulfilled, (state, action) => {
-      state.statuses = action.payload;
-    });
+    builder
+      .addCase(fetchStatuses.fulfilled, (state, action) => {
+        state.statuses = action.payload;
+      })
+      .addCase(fetchStatuses.rejected, (state, action) => {
+        state.error = action.error.message || 'Ошибка получения статусов';
+      });
   },
 });
 
 export const selectAllStatuses = (state: RootState) => state.statuses.statuses;
+export const selectStatusesError = (state: RootState) => state.statuses.error;
 
 export default statusesSlice.reducer;

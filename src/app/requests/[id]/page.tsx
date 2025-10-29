@@ -1,15 +1,23 @@
 'use client';
+import Loader from '@/components/Loader/Loader';
 import Modal from '@/components/Modal/Modal';
 import RequestContent from '@/components/RequestContent/RequestContent';
 import RequestFields from '@/components/RequestFields/RequestFields';
 import useGetRequestData from '@/hooks/useGetRequestData';
+import {
+  selectRequestsError,
+  selectRequestsStatus,
+} from '@/lib/features/requests/requestsSlice';
+import { useAppSelector } from '@/lib/hooks';
 
 import { modalPath } from '../layout';
 
 import styles from './requestIdPage.module.scss';
 
 const EditForm = () => {
-  const request = useGetRequestData();
+  const { request, error } = useGetRequestData();
+  const requestsStatus = useAppSelector(selectRequestsStatus);
+  const requestsError = useAppSelector(selectRequestsError);
 
   const Title = (
     <>
@@ -18,18 +26,26 @@ const EditForm = () => {
     </>
   );
 
+  let content;
+
+  if (requestsStatus === 'loading') {
+    content = <Loader modificator={styles.loaderWrapper} />;
+  } else if (requestsStatus === 'failed' || error) {
+    content = (
+      <p className={styles.error}>{requestsError || 'Заявка не найдена'}</p>
+    );
+  } else if (requestsStatus === 'succeeded') {
+    content = (
+      <>
+        <RequestContent />
+        <RequestFields />
+      </>
+    );
+  }
+
   return (
     <Modal path={modalPath} title={Title}>
-      <div className={styles.wrapper}>
-        {!request ? (
-          <p>Загрузка модалки</p>
-        ) : (
-          <>
-            <RequestContent />
-            <RequestFields />
-          </>
-        )}
-      </div>
+      <div className={styles.wrapper}>{content}</div>
     </Modal>
   );
 };

@@ -1,5 +1,5 @@
 'use client';
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { fetchExecutors } from '@/lib/features/executors/executorsSlice';
 import { fetchPriorities } from '@/lib/features/priorities/prioritiesSlice';
@@ -14,6 +14,7 @@ import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import RequestItem from './RequestItem/RequestItem';
 import RequestsListHeader from './RequestsListHeader/RequestsListHeader';
 
+import Loader from '../Loader/Loader';
 import styles from './RequestList.module.scss';
 
 const RequestsList = () => {
@@ -38,10 +39,9 @@ const RequestsList = () => {
   let content;
 
   if (requestsStatus === 'loading') {
-    // TODO: сделать спиннер
-    content = <p>Загрузка листа</p>;
+    content = <Loader modificator={styles.loaderWrapper} />;
   } else if (requestsStatus === 'failed') {
-    content = <p>{requestsError}</p>;
+    content = <p className={styles.error}>{requestsError}</p>;
   } else if (requestsStatus === 'succeeded') {
     content = requests.map((request) => (
       <RequestItem key={request.id} {...request} />
@@ -56,4 +56,4 @@ const RequestsList = () => {
   );
 };
 
-export default React.memo(RequestsList);
+export default RequestsList;

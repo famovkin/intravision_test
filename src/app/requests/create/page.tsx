@@ -46,7 +46,7 @@ const CreateRequestForm = () => {
         }
       } catch (err) {
         setStatus('failed');
-        console.log('Ошибка:', err);
+        console.log('Ошибка создания:', err);
       }
     }
   };

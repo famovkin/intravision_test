@@ -10,7 +10,7 @@ const useGetRequestData = () => {
     selectRequestById(state, Number(requestId))
   );
 
-  return request;
+  return { request, error: request === undefined ? 'Заявка не найдена' : null };
 };
 
 export default useGetRequestData;

@@ -19,7 +19,7 @@ const RequestContent = () => {
   const [comment, setComment] = useState('');
   const [commentsList, setCommentsList] = useState<IComment[]>([]);
   // Тут локальное состояние, так как бэк не сохраняет и не отдает комментарии
-  const request = useGetRequestData();
+  const { request } = useGetRequestData();
 
   const onSendCommentHandler = useCallback(() => {
     setCommentsList((prev) => [

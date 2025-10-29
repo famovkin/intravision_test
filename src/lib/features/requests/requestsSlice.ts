@@ -51,12 +51,14 @@ interface IInitialState {
   requests: IRequest[];
   status: StatusesType;
   error: null | string;
+  editError: null | string;
 }
 
 const initialState: IInitialState = {
   requests: [],
   status: 'idle',
   error: null,
+  editError: null,
 };
 
 export const fetchRequests = createAsyncThunk<
@@ -139,7 +141,7 @@ export const editRequest = createAsyncThunk<
   });
 
   if (!response.ok) {
-    throw new Error('Ошибка при создании новой заявки');
+    throw new Error('Ошибка при редактировании заявки');
   }
 
   const newRequestResponse = await fetch(
@@ -147,7 +149,7 @@ export const editRequest = createAsyncThunk<
   );
 
   if (!newRequestResponse.ok) {
-    throw new Error('Ошибка получения информации о заявке');
+    throw new Error('Ошибка получения о измененной о заявке');
   }
 
   const newRequestData = await newRequestResponse.json();
@@ -170,17 +172,21 @@ const requestsSlice = createSlice({
       })
       .addCase(fetchRequests.rejected, (state, action) => {
         state.status = 'failed';
-        state.error = action.error.message || 'Ошибка';
+        state.error = action.error.message || 'Ошибка получения заявок';
       })
       .addCase(addNewRequest.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.requests.push(action.payload);
       })
       .addCase(editRequest.fulfilled, (state, action) => {
+        state.editError = null;
         const updatedRequestIndex = state.requests.findIndex(
           (request) => request.id === action.payload.id
         );
         state.requests[updatedRequestIndex] = action.payload;
+      })
+      .addCase(editRequest.rejected, (state, action) => {
+        state.editError = action.error.message || 'Ошибка редактирования';
       });
   },
 });
@@ -190,5 +196,7 @@ export const selectRequestById = (state: RootState, id: number) =>
   state.requests.requests.find((request) => request.id === id);
 export const selectRequestsStatus = (state: RootState) => state.requests.status;
 export const selectRequestsError = (state: RootState) => state.requests.error;
+export const selectRequestEditError = (state: RootState) =>
+  state.requests.editError;
 
 export default requestsSlice.reducer;

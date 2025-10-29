@@ -1,5 +1,7 @@
+import Title from '@/components/Title/Title';
+
 const Staff = () => {
-  return <h1>Сотрудники</h1>;
+  return <Title text="Сотрудники" />;
 };
 
 export default Staff;

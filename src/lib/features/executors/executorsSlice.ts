@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { GET_EXECUTORS_URL } from '@/lib/constants';
 import { RootState } from '@/lib/store';
-import { StatusesType } from '@/lib/types';
 
 export interface IExecutor {
   id: number;
@@ -11,13 +10,11 @@ export interface IExecutor {
 
 interface IInitialState {
   executors: IExecutor[];
-  status: StatusesType;
   error: null | string;
 }
 
 const initialState: IInitialState = {
   executors: [],
-  status: 'idle',
   error: null,
 };
 
@@ -27,7 +24,7 @@ export const fetchExecutors = createAsyncThunk(
     const response = await fetch(GET_EXECUTORS_URL);
 
     if (!response.ok) {
-      throw new Error('Ошибка получения списка исполнителей');
+      throw new Error('Ошибка получения исполнителей');
     }
 
     const res = await response.json();
@@ -42,15 +39,10 @@ const executorsSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchExecutors.pending, (state) => {
-        state.status = 'loading';
-      })
       .addCase(fetchExecutors.fulfilled, (state, action) => {
-        state.status = 'succeeded';
         state.executors = action.payload;
       })
       .addCase(fetchExecutors.rejected, (state, action) => {
-        state.status = 'failed';
         state.error = action.error.message || 'Ошибка';
       });
   },
@@ -58,8 +50,6 @@ const executorsSlice = createSlice({
 
 export const selectAllExecutors = (state: RootState) =>
   state.executors.executors;
-export const selectExecutorsStatus = (state: RootState) =>
-  state.executors.status;
 export const selectExecutorsError = (state: RootState) => state.executors.error;
 
 export default executorsSlice.reducer;

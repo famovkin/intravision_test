@@ -11,6 +11,7 @@ interface ICustomSelect<T> {
   fieldName: string;
   onChange?: (selected: { [key: string]: number }) => void;
   modificator?: string;
+  error?: string | null;
 }
 
 const Select = <T extends Option>({
@@ -19,6 +20,7 @@ const Select = <T extends Option>({
   onChange,
   fieldName,
   modificator,
+  error,
 }: ICustomSelect<T>) => {
   const initState = () => options.find((option) => option.id === activeOption);
   const [selectedOption, setSelectedOption] = useState<Option | undefined>(
@@ -50,6 +52,10 @@ const Select = <T extends Option>({
   };
 
   const onBoxClickHandler = () => setShowOptions(!showOptions);
+
+  if (error) {
+    return <p className={styles.error}>{error}</p>;
+  }
 
   return (
     <div

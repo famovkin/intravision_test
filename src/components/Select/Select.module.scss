@@ -24,6 +24,11 @@
   transition: background 0.2s ease-in-out;
 }
 
+.error {
+  color: red;
+  font-size: 15px;
+}
+
 @media (hover: hover) {
   .optionItem:hover {
     background: #d1e0ed;

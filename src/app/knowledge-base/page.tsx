@@ -1,6 +1,7 @@
+import Title from '@/components/Title/Title';
 
 const KnowledgeBase = () => {
-  return <h1>База знаний</h1>;
+  return <Title text="База знаний" />;
 };
 
 export default KnowledgeBase;

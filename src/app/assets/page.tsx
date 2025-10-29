@@ -1,5 +1,7 @@
+import Title from '@/components/Title/Title';
+
 const Assets = () => {
-  return <h1>Активы</h1>;
+  return <Title text="Активы" />;
 };
 
 export default Assets;

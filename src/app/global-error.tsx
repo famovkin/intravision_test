@@ -4,8 +4,10 @@ const GlobalError = () => {
   return (
     <html>
       <body>
-        <h1>global-error</h1>
-        <button onClick={() => window.location.reload()}>Refresh</button>
+        <h1>Произошла ошибка</h1>
+        <button onClick={() => window.location.reload()}>
+          Перезагрузить страницу
+        </button>
       </body>
     </html>
   );

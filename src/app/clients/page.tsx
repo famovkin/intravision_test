@@ -1,5 +1,7 @@
+import Title from '@/components/Title/Title';
+
 const Clients = () => {
-  return <h1>Клиенты</h1>;
+  return <Title text="Клиенты" />;
 };
 
 export default Clients;
