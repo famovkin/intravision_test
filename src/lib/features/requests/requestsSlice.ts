@@ -71,12 +71,7 @@ export const addNewRequest = createAsyncThunk<
     headers: {
       'Content-Type': 'application/json',
     },
-    body: JSON.stringify({
-      ...newRequest,
-      // Значения по умолчанию
-      resolutionDatePlan: '2026-12-31T00:00:00.2939101+03:00',
-      tags: [70240],
-    }),
+    body: JSON.stringify(newRequest),
   });
 
   if (!response.ok) {
