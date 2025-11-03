@@ -1,5 +1,5 @@
 'use client';
-import { addNewRequest } from '@/lib/features/requests/requestsSlice';
+import { createSingleRequest } from '@/lib/features/singleRequest/singleRequestSlice';
 import { useAppDispatch } from '@/lib/hooks';
 import { useRouter } from 'next/navigation';
 import { ChangeEvent, FormEvent, useCallback, useState } from 'react';
@@ -32,10 +32,10 @@ const CreateRequestForm = () => {
       try {
         setStatus('loading');
         const resultAction = await dispatch(
-          addNewRequest({ name: title, description })
+          createSingleRequest({ name: title, description })
         );
 
-        if (addNewRequest.fulfilled.match(resultAction)) {
+        if (createSingleRequest.fulfilled.match(resultAction)) {
           setTitle('');
           setDescription('');
           setStatus('succeeded');

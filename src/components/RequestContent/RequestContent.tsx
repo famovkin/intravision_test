@@ -1,45 +1,54 @@
 import { ChangeEvent, useCallback, useState } from 'react';
 
-import useGetRequestData from '@/hooks/useGetRequestData';
 import Button from '../Button/Button';
 import Comment from '../Comment/Comment';
 import Textarea from '../Textarea/Textarea';
 
-import { IAuthor, IComment } from '@/types/types';
+import {
+  editRequest,
+  resetChanges,
+  selectRequestChanges,
+  selectSingleRequest,
+  selectSingleRequestEditError,
+} from '@/lib/features/singleRequest/singleRequestSlice';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 
 import styles from './RequestContent.module.scss';
 
-const defaultAuthor: IAuthor = {
-  name: 'Иванов Александр',
-  avatar: '/default-avatar.jpg',
-  gender: 'M',
-};
-
 const RequestContent = () => {
   const [comment, setComment] = useState('');
-  console.log(comment);
-  const [commentsList, setCommentsList] = useState<IComment[]>([]);
-  // Тут локальное состояние, так как бэк не сохраняет и не отдает комментарии
-  const { request } = useGetRequestData();
+  const dispatch = useAppDispatch();
+  const request = useAppSelector(selectSingleRequest);
+  const requestChanges = useAppSelector(selectRequestChanges);
+  const editError = useAppSelector(selectSingleRequestEditError);
 
-  const onSendCommentHandler = useCallback(() => {
-    if (comment) {
-      setCommentsList((prev) => [
-        ...prev,
-        {
-          text: comment,
-          author: defaultAuthor,
-          date: new Date(),
-        },
-      ]);
-      setComment('');
-    }
-  }, [comment]);
-
-  const onInputHandler = useCallback(
-    (e: ChangeEvent<HTMLTextAreaElement>) => setComment(e.target.value),
-    []
+  const commentsList = request?.lifetimeItems;
+  const notEmptyCommentsList = commentsList?.filter(
+    (commentItem) => commentItem.comment !== null
   );
+  const canSave = Boolean(comment) || Object.keys(requestChanges).length > 0;
+
+  const onSendCommentHandler = () => {
+    if (!request) return;
+
+    dispatch(
+      editRequest({
+        executorId: request.executorId,
+        statusId: request.statusId,
+        id: request.id,
+        comment,
+        ...requestChanges,
+      })
+    );
+
+    setComment('');
+    dispatch(resetChanges());
+  };
+
+  const onInputHandler = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
+    const value = e.target.value;
+    setComment(value);
+  }, []);
 
   return (
     <div className={styles.contentWrapper}>
@@ -54,17 +63,20 @@ const RequestContent = () => {
         modificator={styles.commentInput}
       />
 
+      {editError && <p className={styles.error}>{editError}</p>}
+
       <Button
         modificator={styles.btnSave}
         onClick={onSendCommentHandler}
-        isEnable={Boolean(comment)}
+        isEnable={canSave}
       >
         Сохранить
       </Button>
 
       <ul className={styles.commentsList}>
-        {commentsList.length > 0 &&
-          commentsList.map((commentData, index) => (
+        {notEmptyCommentsList &&
+          notEmptyCommentsList?.length > 0 &&
+          notEmptyCommentsList.map((commentData, index) => (
             <Comment comment={commentData} key={index} />
           ))}
       </ul>

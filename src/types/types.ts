@@ -7,18 +7,6 @@ interface IColor {
 }
 type StatusesType = 'idle' | 'loading' | 'succeeded' | 'failed';
 
-interface IAuthor {
-  name: string;
-  avatar: string;
-  gender: gender;
-}
-
-interface IComment {
-  text: string;
-  author: IAuthor;
-  date: Date;
-}
-
 type PrioritiesName =
   | 'Очень низкий'
   | 'Низкий'
@@ -63,15 +51,28 @@ interface IRequest {
   taskTypeId: number;
   taskTypeName: string;
   updatedAt: string;
+  lifetimeItems: ITaskLifetimeItem[] | [];
+}
+
+type LifeTime = 10 | 20 | 30;
+
+interface ITaskLifetimeItem {
+  id: number;
+  comment: string | null;
+  createdAt: string;
+  newFieldValue: string;
+  oldFieldValue: string;
+  userName: string;
+  lifetimeType: LifeTime;
 }
 
 export type {
   gender,
-  IAuthor, IColor,
-  IComment,
+  IColor,
   IRequest,
+  ITaskLifetimeItem,
   PrioritiesName,
-  StatusesType, StatusName,
   RgbType,
+  StatusesType,
+  StatusName,
 };
-

@@ -1,5 +1,4 @@
 import Image from 'next/image';
-import { usePathname } from 'next/navigation';
 import { useCallback } from 'react';
 
 import {
@@ -7,10 +6,9 @@ import {
   selectExecutorsError,
 } from '@/lib/features/executors/executorsSlice';
 import {
-  editRequest,
-  selectRequestById,
-  selectRequestEditError,
-} from '@/lib/features/requests/requestsSlice';
+  selectSingleRequest,
+  updateRequestChanges,
+} from '@/lib/features/singleRequest/singleRequestSlice';
 import {
   selectAllStatusesMemo,
   selectStatusesError,
@@ -26,29 +24,17 @@ import styles from './RequestFields.module.scss';
 
 const RequestFields = () => {
   const dispatch = useAppDispatch();
-  const pathname = usePathname();
-  const requestId = pathname?.split('/').at(-1);
-  const request = useAppSelector((state) =>
-    selectRequestById(state, Number(requestId))
-  );
+  const request = useAppSelector(selectSingleRequest);
 
   const statuses = useAppSelector(selectAllStatusesMemo);
   const executors = useAppSelector(selectAllExecutorsMemo);
-  const editError = useAppSelector(selectRequestEditError);
   const statusesError = useAppSelector(selectStatusesError);
   const executorsError = useAppSelector(selectExecutorsError);
 
   const onEdit = useCallback(
     (editFields: { [key: string]: number }) => {
       if (request) {
-        const updatedFieldWithRequestId = {
-          executorId: request.executorId,
-          statusId: request.statusId,
-          id: request.id,
-          ...editFields,
-        };
-
-        dispatch(editRequest(updatedFieldWithRequestId));
+        dispatch(updateRequestChanges(editFields));
       }
     },
     [dispatch, request]
@@ -58,7 +44,6 @@ const RequestFields = () => {
 
   return (
     <div className={styles.contentWrapper}>
-      {editError && <p className={styles.error}>{editError}</p>}
       <div className={styles.statusWrapper}>
         <span
           style={{ background: request?.statusRgb }}

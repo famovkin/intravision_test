@@ -1,23 +1,37 @@
 'use client';
+import { usePathname } from 'next/navigation';
+import { useEffect } from 'react';
+
 import Loader from '@/components/Loader/Loader';
 import Modal from '@/components/Modal/Modal';
 import RequestContent from '@/components/RequestContent/RequestContent';
 import RequestFields from '@/components/RequestFields/RequestFields';
-import useGetRequestData from '@/hooks/useGetRequestData';
 import {
-  selectRequestsError,
-  selectRequestsStatus,
-} from '@/lib/features/requests/requestsSlice';
-import { useAppSelector } from '@/lib/hooks';
+  fetchSingleRequest,
+  selectSingleRequest,
+  selectSingleRequestError,
+  selectSingleRequestStatus,
+} from '@/lib/features/singleRequest/singleRequestSlice';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 
 import { modalPath } from '@/utils/constants';
 
 import styles from './requestIdPage.module.scss';
 
 const EditForm = () => {
-  const { request, error } = useGetRequestData();
-  const requestsStatus = useAppSelector(selectRequestsStatus);
-  const requestsError = useAppSelector(selectRequestsError);
+  const dispatch = useAppDispatch();
+  const pathname = usePathname();
+  const requestId = pathname?.split('/').at(-1);
+
+  useEffect(() => {
+    if (requestId) {
+      dispatch(fetchSingleRequest(requestId));
+    }
+  }, [dispatch, requestId]);
+
+  const request = useAppSelector(selectSingleRequest);
+  const error = useAppSelector(selectSingleRequestError);
+  const loadingState = useAppSelector(selectSingleRequestStatus);
 
   const Title = (
     <>
@@ -28,13 +42,11 @@ const EditForm = () => {
 
   let content;
 
-  if (requestsStatus === 'loading') {
+  if (loadingState === 'loading') {
     content = <Loader modificator={styles.loaderWrapper} />;
-  } else if (requestsStatus === 'failed' || error) {
-    content = (
-      <p className={styles.error}>{requestsError || 'Заявка не найдена'}</p>
-    );
-  } else if (requestsStatus === 'succeeded') {
+  } else if (loadingState === 'failed' || error) {
+    content = <p className={styles.error}>{error}</p>;
+  } else if (loadingState === 'succeeded') {
     content = (
       <>
         <RequestContent />

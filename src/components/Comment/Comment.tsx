@@ -1,13 +1,13 @@
 import Image from 'next/image';
 import React, { FC } from 'react';
 
-import { IComment } from '@/types/types';
+import { ITaskLifetimeItem } from '@/types/types';
 import { formatDateWithTime } from '@/utils/utils';
 
 import styles from './Comment.module.scss';
 
 interface ICommentProps {
-  comment: IComment;
+  comment: ITaskLifetimeItem;
 }
 
 const Comment: FC<ICommentProps> = ({ comment }) => {
@@ -17,16 +17,15 @@ const Comment: FC<ICommentProps> = ({ comment }) => {
         width={40}
         height={40}
         className={styles.avatar}
-        src={comment.author.avatar}
-        alt={comment.author.name}
+        src="/default-avatar.jpg"
+        alt={comment.userName}
       />
       <div className={styles.commentContent}>
-        <p className={styles.author}>{comment.author.name}</p>
+        <p className={styles.author}>{comment.userName}</p>
         <p className={styles.date}>
-          {formatDateWithTime(comment.date)} прокомментировал
-          {comment.author.gender === 'M' ? '' : 'a'}
+          {formatDateWithTime(comment.createdAt)} прокомментировал
         </p>
-        <p className={styles.commentText}>{comment.text}</p>
+        <p className={styles.commentText}>{comment.comment}</p>
       </div>
     </li>
   );

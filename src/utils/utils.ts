@@ -13,12 +13,13 @@ const formatDateShort = (dateString: string | undefined) => {
   }
 };
 
-const formatDateWithTime = (date: Date): string => {
+const formatDateWithTime = (date: string): string => {
   // ДД месяц, чч:мм
-  const day = date.getDate();
-  const month = months[date.getMonth()];
-  const hours = date.getHours();
-  const minutes = date.getMinutes().toString().padStart(2, '0');
+  const dateObj = new Date(date);
+  const day = dateObj.getDate();
+  const month = months[dateObj.getMonth()];
+  const hours = dateObj.getHours();
+  const minutes = dateObj.getMinutes().toString().padStart(2, '0');
 
   return `${day} ${month}, ${hours}:${minutes}`;
 };
