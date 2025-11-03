@@ -27,6 +27,7 @@ interface IInitialState {
   changes: IRequestChanges;
   status: StatusesType;
   error: null | string;
+  editStatus: StatusesType;
   editError: null | string;
 }
 
@@ -36,6 +37,7 @@ const initialState: IInitialState = {
   status: 'idle',
   error: null,
   editError: null,
+  editStatus: 'idle',
 };
 
 export const fetchSingleRequest = createAsyncThunk<
@@ -45,16 +47,14 @@ export const fetchSingleRequest = createAsyncThunk<
 >(
   'singleRequest/fetchSingleRequest',
   async (id, thunkAPI) => {
-    thunkAPI.dispatch(resetChanges());
     const response = await fetch(`${SINGlE_REQUEST_URL}${id}`);
-    
 
     if (!response.ok) {
       throw new Error('Ошибка получения заявки');
     }
 
     const res = await response.json();
-
+    thunkAPI.dispatch(resetChanges());
     return res;
   },
   {
@@ -105,33 +105,45 @@ export const editRequest = createAsyncThunk<
   IRequest,
   IEditRequest,
   { state: RootState }
->('requests/editRequest', async (editRequestData, thunkAPI) => {
-  if (!editRequestData.executorId && !editRequestData.statusId) {
-    return;
+>(
+  'requests/editRequest',
+  async (editRequestData, thunkAPI) => {
+    if (!editRequestData.executorId && !editRequestData.statusId) {
+      return;
+    }
+
+    const response = await fetch(SINGlE_REQUEST_URL, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(editRequestData),
+    });
+
+    if (!response.ok) {
+      throw new Error('Ошибка редактировании заявки');
+    }
+
+    const newRequestResponse = await fetch(
+      `${SINGlE_REQUEST_URL}${editRequestData.id}`
+    );
+
+    if (!newRequestResponse.ok) {
+      throw new Error('Ошибка получения о измененной о заявке');
+    }
+
+    const newRequestData = await newRequestResponse.json();
+    thunkAPI.dispatch(updateEditedRequest(newRequestData));
+    return newRequestData;
+  },
+  {
+    condition: (_, { getState }) => {
+      const { singleRequest } = getState();
+      if (singleRequest.editStatus === 'loading') {
+        return false;
+      }
+      return true;
+    },
   }
-
-  const response = await fetch(SINGlE_REQUEST_URL, {
-    method: 'PUT',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(editRequestData),
-  });
-
-  if (!response.ok) {
-    throw new Error('Ошибка редактировании заявки');
-  }
-
-  const newRequestResponse = await fetch(
-    `${SINGlE_REQUEST_URL}${editRequestData.id}`
-  );
-
-  if (!newRequestResponse.ok) {
-    throw new Error('Ошибка получения о измененной о заявке');
-  }
-
-  const newRequestData = await newRequestResponse.json();
-  thunkAPI.dispatch(updateEditedRequest(newRequestData));
-  return newRequestData;
-});
+);
 
 const singleRequestSlice = createSlice({
   name: 'singleRequest',
@@ -162,12 +174,16 @@ const singleRequestSlice = createSlice({
         state.status = 'succeeded';
         state.request = action.payload;
       })
+      .addCase(editRequest.pending, (state) => {
+        state.editStatus = 'loading';
+      })
       .addCase(editRequest.fulfilled, (state, action) => {
-        state.status = 'succeeded';
+        state.editStatus = 'succeeded';
         state.editError = null;
         state.request = action.payload;
       })
       .addCase(editRequest.rejected, (state, action) => {
+        state.editStatus = 'failed';
         state.editError = action.error.message || 'Ошибка редактирования';
       });
   },
@@ -183,6 +199,8 @@ export const selectSingleRequestError = (state: RootState) =>
   state.singleRequest.error;
 export const selectSingleRequestEditError = (state: RootState) =>
   state.singleRequest.editError;
+export const selectSingleRequestEditStatus = (state: RootState) =>
+  state.singleRequest.editStatus;
 
 export const { updateRequestChanges, resetChanges } =
   singleRequestSlice.actions;

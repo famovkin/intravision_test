@@ -10,6 +10,7 @@ import {
   selectRequestChanges,
   selectSingleRequest,
   selectSingleRequestEditError,
+  selectSingleRequestEditStatus,
 } from '@/lib/features/singleRequest/singleRequestSlice';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 
@@ -21,22 +22,21 @@ const RequestContent = () => {
   const request = useAppSelector(selectSingleRequest);
   const requestChanges = useAppSelector(selectRequestChanges);
   const editError = useAppSelector(selectSingleRequestEditError);
+  const editStatus = useAppSelector(selectSingleRequestEditStatus);
 
   const commentsList = request?.lifetimeItems;
-  // const notEmptyCommentsList = commentsList?.filter(
-  //   (commentItem) => commentItem.comment !== null
-  // );
-
   const notEmptyCommentsList = useMemo(
     () => commentsList?.filter((commentItem) => commentItem.comment !== null),
     [commentsList]
   );
-  const canSave = Boolean(comment) || Object.keys(requestChanges).length > 0;
+  const canSave =
+    (Boolean(comment) || Object.keys(requestChanges).length > 0) &&
+    editStatus !== 'loading';
 
-  const onSendCommentHandler = () => {
+  const onSendCommentHandler = async () => {
     if (!request) return;
 
-    dispatch(
+    const resultAction = await dispatch(
       editRequest({
         executorId: request.executorId,
         statusId: request.statusId,
@@ -46,8 +46,10 @@ const RequestContent = () => {
       })
     );
 
-    setComment('');
-    dispatch(resetChanges());
+    if (editRequest.fulfilled.match(resultAction)) {
+      setComment('');
+      dispatch(resetChanges());
+    }
   };
 
   const onInputHandler = useCallback((e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -75,7 +77,7 @@ const RequestContent = () => {
         onClick={onSendCommentHandler}
         isEnable={canSave}
       >
-        Сохранить
+        {editStatus === 'loading' ? 'Сохранение...' : 'Сохранить'}
       </Button>
 
       <ul className={styles.commentsList}>

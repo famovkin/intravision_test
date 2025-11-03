@@ -51,7 +51,7 @@ interface IRequest {
   taskTypeId: number;
   taskTypeName: string;
   updatedAt: string;
-  lifetimeItems: ITaskLifetimeItem[] | [];
+  lifetimeItems: ITaskLifetimeItem[];
 }
 
 type LifeTime = 10 | 20 | 30;
