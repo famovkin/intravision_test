@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useState } from 'react';
+import { ChangeEvent, useCallback, useMemo, useState } from 'react';
 
 import Button from '../Button/Button';
 import Comment from '../Comment/Comment';
@@ -23,8 +23,13 @@ const RequestContent = () => {
   const editError = useAppSelector(selectSingleRequestEditError);
 
   const commentsList = request?.lifetimeItems;
-  const notEmptyCommentsList = commentsList?.filter(
-    (commentItem) => commentItem.comment !== null
+  // const notEmptyCommentsList = commentsList?.filter(
+  //   (commentItem) => commentItem.comment !== null
+  // );
+
+  const notEmptyCommentsList = useMemo(
+    () => commentsList?.filter((commentItem) => commentItem.comment !== null),
+    [commentsList]
   );
   const canSave = Boolean(comment) || Object.keys(requestChanges).length > 0;
 

@@ -55,9 +55,5 @@ const executorsSlice = createSlice({
 export const selectAllExecutors = (state: RootState) =>
   state.executors.executors;
 export const selectExecutorsError = (state: RootState) => state.executors.error;
-export const selectAllExecutorsMemo = createSelector(
-  [selectAllExecutors],
-  (executors) => executors
-);
 
 export default executorsSlice.reducer;

@@ -2,7 +2,7 @@ import Image from 'next/image';
 import { useCallback } from 'react';
 
 import {
-  selectAllExecutorsMemo,
+  selectAllExecutors,
   selectExecutorsError,
 } from '@/lib/features/executors/executorsSlice';
 import {
@@ -10,7 +10,7 @@ import {
   updateRequestChanges,
 } from '@/lib/features/singleRequest/singleRequestSlice';
 import {
-  selectAllStatusesMemo,
+  selectAllStatuses,
   selectStatusesError,
 } from '@/lib/features/statuses/statusesSlice';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
@@ -26,8 +26,8 @@ const RequestFields = () => {
   const dispatch = useAppDispatch();
   const request = useAppSelector(selectSingleRequest);
 
-  const statuses = useAppSelector(selectAllStatusesMemo);
-  const executors = useAppSelector(selectAllExecutorsMemo);
+  const statuses = useAppSelector(selectAllStatuses);
+  const executors = useAppSelector(selectAllExecutors);
   const statusesError = useAppSelector(selectStatusesError);
   const executorsError = useAppSelector(selectExecutorsError);
 

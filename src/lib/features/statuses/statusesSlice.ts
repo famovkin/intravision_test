@@ -54,9 +54,5 @@ const statusesSlice = createSlice({
 
 export const selectAllStatuses = (state: RootState) => state.statuses.statuses;
 export const selectStatusesError = (state: RootState) => state.statuses.error;
-export const selectAllStatusesMemo = createSelector(
-  [selectAllStatuses],
-  (statuses) => statuses
-);
 
 export default statusesSlice.reducer;

@@ -15,6 +15,7 @@ const Navbar = () => {
           width={52}
           height={44}
           alt="Галочка"
+          loading="eager"
         />
       </Link>
       <NavbarList />

@@ -86,11 +86,6 @@ export const selectAllRequests = (state: RootState) => state.requests.requests;
 export const selectRequestsStatus = (state: RootState) => state.requests.status;
 export const selectRequestsError = (state: RootState) => state.requests.error;
 
-export const selectAllRequestsMemo = createSelector(
-  [selectAllRequests],
-  (requests) => requests
-);
-
 export const { addNewRequest, updateEditedRequest } = requestsSlice.actions;
 
 export default requestsSlice.reducer;
