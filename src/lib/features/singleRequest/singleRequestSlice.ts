@@ -44,8 +44,10 @@ export const fetchSingleRequest = createAsyncThunk<
   { state: RootState }
 >(
   'singleRequest/fetchSingleRequest',
-  async (id) => {
+  async (id, thunkAPI) => {
+    thunkAPI.dispatch(resetChanges());
     const response = await fetch(`${SINGlE_REQUEST_URL}${id}`);
+    
 
     if (!response.ok) {
       throw new Error('Ошибка получения заявки');
