@@ -11,6 +11,8 @@ interface ICommentProps {
 }
 
 const Comment: FC<ICommentProps> = ({ comment }) => {
+  const { userName, createdAt, comment: text } = comment;
+
   return (
     <li className={styles.commentWrapper}>
       <Image
@@ -18,14 +20,14 @@ const Comment: FC<ICommentProps> = ({ comment }) => {
         height={40}
         className={styles.avatar}
         src="/default-avatar.jpg"
-        alt={comment.userName}
+        alt={userName}
       />
       <div className={styles.commentContent}>
         <p className={styles.author}>{comment.userName}</p>
         <p className={styles.date}>
-          {formatDateWithTime(comment.createdAt)} прокомментировал
+          {formatDateWithTime(createdAt)} прокомментировал
         </p>
-        <p className={styles.commentText}>{comment.comment}</p>
+        <p className={styles.commentText}>{text}</p>
       </div>
     </li>
   );

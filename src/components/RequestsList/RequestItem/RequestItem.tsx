@@ -23,7 +23,7 @@ const RequestItem: FC<IRequest> = ({
           <RequestId id={id} priorityId={priorityId} priority={priorityName} />
         </div>
         <div className={styles.titleWrapper}>
-          <p>{name}</p>
+          <p className={styles.title}>{name}</p>
         </div>
         <div className={styles.statusWrapper}>
           <Status text={statusName} color={statusRgb} />

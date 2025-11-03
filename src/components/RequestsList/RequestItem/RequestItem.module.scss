@@ -26,6 +26,10 @@
   -webkit-line-clamp: 2;
 }
 
+.title {
+  white-space: pre-wrap;
+}
+
 .statusWrapper {
   display: flex;
   width: 127px;

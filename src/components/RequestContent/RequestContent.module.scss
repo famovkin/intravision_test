@@ -17,6 +17,7 @@
   font-size: 15px;
   font-weight: 300;
   line-height: 18px;
+  white-space: pre-wrap;
 }
 
 .commentInput {
@@ -33,6 +34,12 @@
   }
 }
 
+.error {
+  margin-bottom: 15px;
+  color: var(--red);
+  font-size: 14px;
+}
+
 .btnSave {
   display: block;
   margin-bottom: 45px;
@@ -45,25 +52,5 @@
     &:last-child {
       margin-bottom: 0;
     }
-  }
-}
-
-.commentWrapper {
-  display: flex;
-  gap: 6px;
-}
-
-.avatar {
-  min-width: 40px;
-  height: 40px;
-  min-height: 40px;
-  border: 1px solid var(--gray-medium);
-  border-radius: 50%;
-  background: #f5f5f5;
-}
-
-@media (max-width: 800px) {
-  .contentWrapper {
-    padding-right: 15px;
   }
 }
