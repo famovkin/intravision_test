@@ -24,4 +24,22 @@ const formatDateWithTime = (date: string): string => {
   return `${day} ${month}, ${hours}:${minutes}`;
 };
 
-export { formatDateShort, formatDateWithTime };
+const addSpacesBetweenChars = (num: number, delimiterCount: number) => {
+  const stringNum = String(num);
+  let result = '';
+  let count = 0;
+
+  for (let i = stringNum.length - 1; i >= 0; i--) {
+    result = stringNum[i] + result;
+    count++;
+
+    if (count === delimiterCount && i !== 0) {
+      result = ' ' + result;
+      count = 0;
+    }
+  }
+
+  return result;
+};
+
+export { formatDateShort, formatDateWithTime, addSpacesBetweenChars };

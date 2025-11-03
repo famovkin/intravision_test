@@ -4,6 +4,8 @@ import { selectPriorities } from '@/lib/features/priorities/prioritiesSlice';
 import { useAppSelector } from '@/lib/hooks';
 import { PrioritiesName } from '@/types/types';
 
+import { addSpacesBetweenChars } from '@/utils/utils';
+
 import styles from './RequestId.module.scss';
 
 interface IRequestId {
@@ -33,7 +35,7 @@ const RequestId: FC<IRequestId> = ({ id, priorityId, priority }) => {
       style={{ ['--badge-color' as string]: normalizedColor }}
       title={priority}
     >
-      {id}
+      {addSpacesBetweenChars(id, 3)}
     </p>
   );
 };

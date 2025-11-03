@@ -15,6 +15,7 @@ import {
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 
 import { modalPath } from '@/utils/constants';
+import { addSpacesBetweenChars } from '@/utils/utils';
 
 import styles from './requestIdPage.module.scss';
 
@@ -35,7 +36,9 @@ const EditForm = () => {
 
   const Title = (
     <>
-      <span className={styles.id}>{request?.id ? `№${request.id}` : ''}</span>
+      <span className={styles.id}>
+        {request?.id ? `№${addSpacesBetweenChars(request.id, 3)}` : ''}
+      </span>
       <span className={styles.title}>{request?.name}</span>
     </>
   );
